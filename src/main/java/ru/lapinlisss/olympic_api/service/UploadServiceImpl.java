@@ -13,6 +13,7 @@ import ru.lapinlisss.olympic_api.repository.*;
 import java.io.*;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -26,13 +27,14 @@ public class UploadServiceImpl implements UploadService {
     private final SportRepository sportRepository;
     private final ResultRepository resultRepository;
 
+    private static AtomicLong counter = new AtomicLong(0L);
+
     @Override
     public void store(MultipartFile file) {
         List<String[]> rows = getParsedRows(file);
         List<Result> results = rows.stream()
                 .map(this::processResult)
                 .collect(Collectors.toList());
-        resultRepository.saveAll(results);
     }
 
     private List<String[]> getParsedRows(MultipartFile file) {
@@ -116,7 +118,9 @@ public class UploadServiceImpl implements UploadService {
                 .bronze(Integer.parseInt(row[11]))
                 .total(Integer.parseInt(row[12]))
                 .build();
-
+        if(counter.addAndGet(1L) % 5000 == 0 && counter.get() > 0) {
+            log.info("stored {} records into result table", counter);
+        }
         return resultRepository.save(result);
     }
 }
