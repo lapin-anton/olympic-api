@@ -1,20 +1,21 @@
 create database db_olympic;
 
 create table country (
-    trigger varchar(8) unique not null,
+    id serial not null,
+    trigger varchar(8) not null,
     name varchar(128) not null,
-    primary key (trigger)
+    primary key (id)
 );
 
 create table athlete (
     id serial unique not null,
-    country varchar(8) not null,
+    country_id integer not null,
     name varchar(128) not null,
     surname varchar(128) not null,
     gender varchar(2) not null,
     url varchar(256),
-    foreign key (country)
-        references country(trigger)
+    foreign key (country_id)
+        references country(id)
 );
 
 create table game (
