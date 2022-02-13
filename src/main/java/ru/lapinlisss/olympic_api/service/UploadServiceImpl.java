@@ -53,7 +53,6 @@ public class UploadServiceImpl implements UploadService {
 
     private Result processResult(String[] row) {
         Game game = Game.builder()
-                .id(1L)
                 .type(row[3])
                 .year(Integer.parseInt(row[2]))
                 .build();
@@ -63,10 +62,9 @@ public class UploadServiceImpl implements UploadService {
         if (gameFromDb.isPresent())
             game = gameFromDb.get();
         else
-            gameRepository.save(game);
+            game = gameRepository.save(game);
 
         Sport sport = Sport.builder()
-                .id(1L)
                 .name(row[8])
                 .build();
 
@@ -75,10 +73,9 @@ public class UploadServiceImpl implements UploadService {
         if (sportFromDb.isPresent())
             sport = sportFromDb.get();
         else
-            sportRepository.save(sport);
+            sport = sportRepository.save(sport);
 
         Country country = Country.builder()
-                .id(1L)
                 .trigger(row[0])
                 .name(row[1])
                 .build();
@@ -88,10 +85,9 @@ public class UploadServiceImpl implements UploadService {
         if (countryFromDb.isPresent())
             country = countryFromDb.get();
         else
-            countryRepository.save(country);
+            country = countryRepository.save(country);
 
         Athlete athlete = Athlete.builder()
-                .id(1L)
                 .country(country)
                 .name(row[5].split(",").length > 1 ? row[5].split(",")[1] : row[5].split(",")[0])
                 .surname(row[5].split(",").length > 1 ? row[5].split(",")[0] : null)
@@ -105,7 +101,7 @@ public class UploadServiceImpl implements UploadService {
         if (athleteFromDb.isPresent())
             athlete = athleteFromDb.get();
         else
-            athleteRepository.save(athlete);
+            athlete = athleteRepository.save(athlete);
 
         Result result = Result.builder()
                 .game(game)
@@ -118,7 +114,7 @@ public class UploadServiceImpl implements UploadService {
                 .bronze(Integer.parseInt(row[11]))
                 .total(Integer.parseInt(row[12]))
                 .build();
-        if(counter.addAndGet(1L) % 5000 == 0 && counter.get() > 0) {
+        if(counter.addAndGet(1L) % 100 == 0 && counter.get() > 0) {
             log.info("stored {} records into result table", counter);
         }
         return resultRepository.save(result);

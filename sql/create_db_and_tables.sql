@@ -48,12 +48,12 @@ create table result (
     foreign key (athlete_id) references athlete(id)
 );
 
--- drop table result;
---
--- drop table athlete;
---
--- drop table country;
---
--- drop table sport;
---
--- drop table game;
+drop table result;
+
+drop table athlete;
+
+drop table country;
+
+drop table sport;
+
+drop table game;
