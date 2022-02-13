@@ -1,0 +1,47 @@
+create database db_olympic;
+
+create table country (
+    trigger varchar(8) unique not null,
+    name varchar(128) not null,
+    primary key (trigger)
+);
+
+create table athlete (
+    id serial unique not null,
+    country varchar(8) not null,
+    name varchar(128) not null,
+    surname varchar(128) not null,
+    gender varchar(2) not null,
+    url varchar(256),
+    foreign key (country)
+        references country(trigger)
+);
+
+create table game (
+    id serial unique not null,
+    type varchar(64) not null,
+    year integer not null,
+    primary key (id)
+);
+
+create table sport (
+    id serial unique not null,
+    name varchar(256) not null,
+    primary key (id)
+);
+
+create table result (
+    id serial not null,
+    game_id integer not null,
+    sport_id integer not null,
+    athlete_id integer not null,
+    athlete_rank integer,
+    athlete_age integer not null,
+    gold integer not null,
+    silver integer not null,
+    bronze integer not null,
+    total integer not null,
+    foreign key (game_id) references game(id),
+    foreign key (sport_id) references sport(id),
+    foreign key (athlete_id) references athlete(id)
+);
