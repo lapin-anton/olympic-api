@@ -12,7 +12,7 @@ create table athlete (
     country_id integer not null,
     name varchar(128) not null,
     surname varchar(128),
-    gender varchar(2) not null,
+    gender varchar(16) not null,
     url varchar(256),
     primary key (id),
     foreign key (country_id)

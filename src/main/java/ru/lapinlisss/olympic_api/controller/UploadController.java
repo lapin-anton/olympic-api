@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import ru.lapinlisss.olympic_api.service.ResultService;
+import ru.lapinlisss.olympic_api.service.UploadService;
 
 @Slf4j
 @RestController
@@ -14,7 +14,7 @@ import ru.lapinlisss.olympic_api.service.ResultService;
 @RequiredArgsConstructor
 public class UploadController {
 
-    private final ResultService resultService;
+    private final UploadService resultService;
 
     @GetMapping("")
     public ResponseEntity<String> getAllDecks() {
@@ -22,7 +22,6 @@ public class UploadController {
         return ResponseEntity.ok().body("Hello!");
     }
 
-    @Transactional
     @PostMapping("")
     public ResponseEntity<String> uploadData(@RequestParam("file") MultipartFile file) {
         resultService.store(file);
