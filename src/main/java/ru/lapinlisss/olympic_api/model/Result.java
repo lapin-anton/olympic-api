@@ -1,11 +1,13 @@
 package ru.lapinlisss.olympic_api.model;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
 
 @Entity
 @Data
+@Builder
 @Table(name = "result")
 public class Result {
 
