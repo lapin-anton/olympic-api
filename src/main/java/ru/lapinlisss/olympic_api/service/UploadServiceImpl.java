@@ -5,15 +5,18 @@ import com.univocity.parsers.tsv.TsvParserSettings;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import ru.lapinlisss.olympic_api.model.*;
 import ru.lapinlisss.olympic_api.repository.*;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -27,19 +30,38 @@ public class UploadServiceImpl implements UploadService {
     private final SportRepository sportRepository;
     private final ResultRepository resultRepository;
 
-    private static AtomicLong counter = new AtomicLong(0L);
-
     @Override
     public void store(MultipartFile file) {
         List<String[]> rows = getParsedRows(file);
         List<Result> results = rows.stream()
                 .map(this::processResult)
                 .collect(Collectors.toList());
+
+        List<Result> bufferedResults;
+        long startTime = new Date().getTime();
+        long lastTime = startTime;
+        long items = 0;
+        while(!results.isEmpty()) {
+            if (results.size() >= 5000) {
+                bufferedResults = results.subList(0, 4999);
+            } else {
+                bufferedResults = results;
+            }
+            resultRepository.saveAllAndFlush(bufferedResults);
+            results.removeAll(bufferedResults);
+            long currentTime = new Date().getTime();
+            items += bufferedResults.size();
+            log.info("During time {} seconds restored {} items into db.", (currentTime - lastTime) / 1000, items);
+            lastTime = currentTime;
+        }
+
+        log.info("Total restoring time: {} seconds", (lastTime - startTime) / 1000);
+        log.info("Total restored items: {}", items);
     }
 
     private List<String[]> getParsedRows(MultipartFile file) {
         List<String[]> parsedRows = null;
-        try (Reader inputReader = new InputStreamReader(file.getInputStream(), "UTF-8")) {
+        try (Reader inputReader = new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8)) {
             TsvParser parser = new TsvParser(new TsvParserSettings());
             parsedRows = parser.parseAll(inputReader);
         } catch (IOException e) {
@@ -52,6 +74,29 @@ public class UploadServiceImpl implements UploadService {
     }
 
     private Result processResult(String[] row) {
+
+        Game game = processGame(row);
+
+        Sport sport = processSport(row);
+
+        Country country = processCountry(row);
+
+        Athlete athlete = processAthlete(country, row);
+
+        return Result.builder()
+                .game(game)
+                .sport(sport)
+                .athlete(athlete)
+                .athleteRank(Integer.parseInt(row[4]))
+                .athleteAge(row[7].equals("None") ? null : Integer.parseInt(row[7]))
+                .gold(Integer.parseInt(row[9]))
+                .silver(Integer.parseInt(row[10]))
+                .bronze(Integer.parseInt(row[11]))
+                .total(Integer.parseInt(row[12]))
+                .build();
+    }
+
+    private Game processGame(String[] row) {
         Game game = Game.builder()
                 .type(row[3])
                 .year(Integer.parseInt(row[2]))
@@ -64,6 +109,10 @@ public class UploadServiceImpl implements UploadService {
         else
             game = gameRepository.save(game);
 
+        return game;
+    }
+
+    private Sport processSport(String[] row) {
         Sport sport = Sport.builder()
                 .name(row[8])
                 .build();
@@ -75,6 +124,10 @@ public class UploadServiceImpl implements UploadService {
         else
             sport = sportRepository.save(sport);
 
+        return sport;
+    }
+
+    private Country processCountry(String[] row) {
         Country country = Country.builder()
                 .trigger(row[0])
                 .name(row[1])
@@ -87,6 +140,10 @@ public class UploadServiceImpl implements UploadService {
         else
             country = countryRepository.save(country);
 
+        return country;
+    }
+
+    private Athlete processAthlete(Country country, String[] row) {
         Athlete athlete = Athlete.builder()
                 .country(country)
                 .name(row[5].split(",").length > 1 ? row[5].split(",")[1] : row[5].split(",")[0])
@@ -103,20 +160,6 @@ public class UploadServiceImpl implements UploadService {
         else
             athlete = athleteRepository.save(athlete);
 
-        Result result = Result.builder()
-                .game(game)
-                .sport(sport)
-                .athlete(athlete)
-                .athleteRank(Integer.parseInt(row[4]))
-                .athleteAge(row[7].equals("None") ? null : Integer.parseInt(row[7]))
-                .gold(Integer.parseInt(row[9]))
-                .silver(Integer.parseInt(row[10]))
-                .bronze(Integer.parseInt(row[11]))
-                .total(Integer.parseInt(row[12]))
-                .build();
-        if(counter.addAndGet(1L) % 100 == 0 && counter.get() > 0) {
-            log.info("stored {} records into result table", counter);
-        }
-        return resultRepository.save(result);
+        return athlete;
     }
 }
