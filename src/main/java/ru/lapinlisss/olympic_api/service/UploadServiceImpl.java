@@ -13,10 +13,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -30,33 +27,164 @@ public class UploadServiceImpl implements UploadService {
     private final SportRepository sportRepository;
     private final ResultRepository resultRepository;
 
+
+    private static final int BUFFER_SIZE = 2000;
+
     @Override
     public void store(MultipartFile file) {
+        log.info("Storing started...");
+        long start = new Date().getTime();
         List<String[]> rows = getParsedRows(file);
-        List<Result> results = rows.stream()
-                .map(this::processResult)
-                .collect(Collectors.toList());
+        storeGames(rows);
+        storeSports(rows);
+        storeCountries(rows);
+        storeAthletes(rows);
+        storeResults(rows);
+        long finish = new Date().getTime();
+        log.info("During {} seconds storing has been complete!", (finish - start) / 1000);
+    }
 
-        List<Result> bufferedResults;
-        long startTime = new Date().getTime();
-        long lastTime = startTime;
-        long items = 0;
-        while(!results.isEmpty()) {
-            if (results.size() >= 5000) {
-                bufferedResults = results.subList(0, 4999);
+    private void storeGames(List<String[]> rows) {
+        log.info("Start games storing...");
+        long start = new Date().getTime();
+        List<Game> gamesPrep = rows.stream().map(row ->
+                Game.builder()
+                        .type(row[3])
+                        .year(Integer.parseInt(row[2]))
+                        .build()
+        ).collect(Collectors.toList());
+
+        List<Game> games = new ArrayList<>(new LinkedHashSet<>(gamesPrep));
+        gameRepository.saveAllAndFlush(games);
+        long finish = new Date().getTime();
+        log.info("During {} seconds stored {} game items in db", (finish - start) / 1000, games.size());
+        log.info("Games storing completed");
+    }
+
+    private void storeSports(List<String[]> rows) {
+        log.info("Start sports storing...");
+        long start = new Date().getTime();
+        List<Sport> sportsPrep = rows.stream().map(row ->
+                Sport.builder()
+                        .name(row[8])
+                        .build()
+        ).collect(Collectors.toList());
+
+        List<Sport> sports = new ArrayList<>(new LinkedHashSet<>(sportsPrep));
+        sportRepository.saveAllAndFlush(sports);
+        long finish = new Date().getTime();
+        log.info("During {} seconds stored {} sport items in db", (finish - start) / 1000, sports.size());
+        log.info("sports storing completed");
+    }
+
+    private void storeCountries(List<String[]> rows) {
+        log.info("Start countries storing...");
+        long start = new Date().getTime();
+        List<Country> countriesPrep = rows.stream().map(row ->
+                Country.builder()
+                        .trigger(row[0])
+                        .name(row[1])
+                        .build()
+        ).collect(Collectors.toList());
+
+        List<Country> countries = new ArrayList<>(new LinkedHashSet<>(countriesPrep));
+        countryRepository.saveAllAndFlush(countries);
+        long finish = new Date().getTime();
+        log.info("During {} seconds stored {} country items in db", (finish - start) / 1000, countries.size());
+        log.info("countries storing completed");
+    }
+
+    private void storeAthletes(List<String[]> rows) {
+        log.info("Start athletes storing...");
+
+        List<Country> countries = countryRepository.findAll();
+
+        Map<String, Country> countryMap = new HashMap<>();
+
+        countries.forEach(country -> countryMap.put(country.getTrigger(), country));
+
+        long start = new Date().getTime();
+        List<Athlete> athletesPrep = rows.stream().map(row ->
+                Athlete.builder()
+                        .country(countryMap.get(row[0]))
+                        .name(row[5].split(",").length > 1 ? row[5].split(",")[1] : row[5].split(",")[0])
+                        .surname(row[5].split(",").length > 1 ? row[5].split(",")[0] : null)
+                        .gender(row[6])
+                        .url(row[13])
+                        .build()
+        ).collect(Collectors.toList());
+
+        List<Athlete> athletes = new ArrayList<>(new LinkedHashSet<>(athletesPrep));
+        long counter = 0;
+        for (int i = 0; i <= athletes.size() / BUFFER_SIZE; i++) {
+            int index = i * BUFFER_SIZE;
+            if (index + BUFFER_SIZE < athletes.size()) {
+                athleteRepository.saveAllAndFlush(athletes.subList(index, index + BUFFER_SIZE));
+                long last = new Date().getTime();
+                counter += BUFFER_SIZE;
+                log.info("During {} seconds stored {} athlete items in db", (last - start) / 1000, counter);
             } else {
-                bufferedResults = results;
+                athleteRepository.saveAllAndFlush(athletes.subList(index, athletes.size()));
             }
-            resultRepository.saveAllAndFlush(bufferedResults);
-            results.removeAll(bufferedResults);
-            long currentTime = new Date().getTime();
-            items += bufferedResults.size();
-            log.info("During time {} seconds restored {} items into db.", (currentTime - lastTime) / 1000, items);
-            lastTime = currentTime;
         }
 
-        log.info("Total restoring time: {} seconds", (lastTime - startTime) / 1000);
-        log.info("Total restored items: {}", items);
+        long finish = new Date().getTime();
+        log.info("During {} seconds stored {} athlete items in db", (finish - start) / 1000, athletes.size());
+        log.info("Athletes storing completed");
+    }
+
+    private void storeResults(List<String[]> rows) {
+        log.info("Start results storing...");
+
+        List<Game> games = gameRepository.findAll();
+
+        List<Sport> sports = sportRepository.findAll();
+
+        List<Athlete> athletes = athleteRepository.findAll();
+
+        Map<String, Game> gameMap = new HashMap<>();
+
+        games.forEach(game -> gameMap.put(String.format("%s %d", game.getType(), game.getYear()), game));
+
+        Map<String, Sport> sportMap = new HashMap<>();
+
+        sports.forEach(sport -> sportMap.put(sport.getName(), sport));
+
+        Map<String, Athlete> athleteMap = new HashMap<>();
+
+        athletes.forEach(athlete -> athleteMap.put(athlete.getUrl(), athlete));
+
+        long start = new Date().getTime();
+
+        List<Result> results = rows.stream().map(row ->
+                Result.builder()
+                        .game(gameMap.get(String.format("%s %s", row[3], row[2])))
+                        .sport(sportMap.get(row[8]))
+                        .athlete(athleteMap.get(row[13]))
+                        .athleteRank(Integer.parseInt(row[4]))
+                        .athleteAge(row[7].equals("None") ? null : Integer.parseInt(row[7]))
+                        .gold(Integer.parseInt(row[9]))
+                        .silver(Integer.parseInt(row[10]))
+                        .bronze(Integer.parseInt(row[11]))
+                        .total(Integer.parseInt(row[12]))
+                        .build()
+        ).collect(Collectors.toList());
+        long counter = 0;
+        for (int i = 0; i <= results.size() / BUFFER_SIZE; i++) {
+            int index = i * BUFFER_SIZE;
+            if (index + BUFFER_SIZE < results.size()) {
+                resultRepository.saveAllAndFlush(results.subList(index, index + BUFFER_SIZE));
+                long last = new Date().getTime();
+                counter += BUFFER_SIZE;
+                log.info("During {} seconds stored {} result items in db", (last - start) / 1000, counter);
+            } else {
+                resultRepository.saveAllAndFlush(results.subList(index, results.size()));
+            }
+        }
+
+        long finish = new Date().getTime();
+        log.info("During {} seconds stored {} result items in db", (finish - start) / 1000, results.size());
+        log.info("Results storing completed");
     }
 
     private List<String[]> getParsedRows(MultipartFile file) {
@@ -73,93 +201,4 @@ public class UploadServiceImpl implements UploadService {
         return parsedRows;
     }
 
-    private Result processResult(String[] row) {
-
-        Game game = processGame(row);
-
-        Sport sport = processSport(row);
-
-        Country country = processCountry(row);
-
-        Athlete athlete = processAthlete(country, row);
-
-        return Result.builder()
-                .game(game)
-                .sport(sport)
-                .athlete(athlete)
-                .athleteRank(Integer.parseInt(row[4]))
-                .athleteAge(row[7].equals("None") ? null : Integer.parseInt(row[7]))
-                .gold(Integer.parseInt(row[9]))
-                .silver(Integer.parseInt(row[10]))
-                .bronze(Integer.parseInt(row[11]))
-                .total(Integer.parseInt(row[12]))
-                .build();
-    }
-
-    private Game processGame(String[] row) {
-        Game game = Game.builder()
-                .type(row[3])
-                .year(Integer.parseInt(row[2]))
-                .build();
-
-        Optional<Game> gameFromDb = gameRepository.findGameByTypeAndYear(game.getType(), game.getYear());
-
-        if (gameFromDb.isPresent())
-            game = gameFromDb.get();
-        else
-            game = gameRepository.save(game);
-
-        return game;
-    }
-
-    private Sport processSport(String[] row) {
-        Sport sport = Sport.builder()
-                .name(row[8])
-                .build();
-
-        Optional<Sport> sportFromDb = sportRepository.findSportByName(sport.getName());
-
-        if (sportFromDb.isPresent())
-            sport = sportFromDb.get();
-        else
-            sport = sportRepository.save(sport);
-
-        return sport;
-    }
-
-    private Country processCountry(String[] row) {
-        Country country = Country.builder()
-                .trigger(row[0])
-                .name(row[1])
-                .build();
-
-        Optional<Country> countryFromDb = countryRepository.findCountryByTrigger(country.getTrigger());
-
-        if (countryFromDb.isPresent())
-            country = countryFromDb.get();
-        else
-            country = countryRepository.save(country);
-
-        return country;
-    }
-
-    private Athlete processAthlete(Country country, String[] row) {
-        Athlete athlete = Athlete.builder()
-                .country(country)
-                .name(row[5].split(",").length > 1 ? row[5].split(",")[1] : row[5].split(",")[0])
-                .surname(row[5].split(",").length > 1 ? row[5].split(",")[0] : null)
-                .gender(row[6])
-                .url(row[13])
-                .build();
-
-        Optional<Athlete> athleteFromDb =
-                athleteRepository.findAthleteByNameAndUrl(athlete.getName(), athlete.getUrl());
-
-        if (athleteFromDb.isPresent())
-            athlete = athleteFromDb.get();
-        else
-            athlete = athleteRepository.save(athlete);
-
-        return athlete;
-    }
 }
