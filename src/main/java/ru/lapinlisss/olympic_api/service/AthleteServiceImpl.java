@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import ru.lapinlisss.olympic_api.model.entity.Athlete;
 import ru.lapinlisss.olympic_api.repository.AthleteRepository;
 
+import java.util.List;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -18,5 +20,9 @@ public class AthleteServiceImpl implements AthleteService {
         return athleteRepository.getById(id);
     }
 
+    @Override
+    public List<Athlete> findAllAthletes() {
+        return athleteRepository.findAll();
+    }
 
 }

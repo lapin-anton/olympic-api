@@ -4,9 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.lapinlisss.olympic_api.model.entity.Athlete;
-import ru.lapinlisss.olympic_api.model.entity.Game;
-import ru.lapinlisss.olympic_api.model.entity.Sport;
 
 @Data
 @Builder

@@ -1,0 +1,91 @@
+{
+	"info": {
+		"_postman_id": "a37daa34-f125-4ea4-8913-331eb951451c",
+		"name": "Olympic API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "upload",
+			"item": [
+				{
+					"name": "upload",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/admin/IdeaProjects/olympic-api/src/main/resources/templates/data.tsv"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/upload",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"upload"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "athlete",
+			"item": [
+				{
+					"name": "all athletes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/athlete/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"athlete",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "athlete by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/athlete/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"athlete",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

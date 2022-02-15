@@ -13,6 +13,9 @@ import ru.lapinlisss.olympic_api.model.dto.AthleteDto;
 import ru.lapinlisss.olympic_api.model.entity.Athlete;
 import ru.lapinlisss.olympic_api.service.AthleteService;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Slf4j
 @RestController
 @RequestMapping("athlete")
@@ -22,7 +25,16 @@ public class AthleteController {
     private final AthleteService athleteService;
 
     // get all
-
+    @Transactional
+    @GetMapping("/all")
+    public ResponseEntity<List<AthleteDto>> getAllAthletes() {
+        log.info("Income request to get all athletes");
+        List<Athlete> athletes = athleteService.findAllAthletes();
+        List<AthleteDto> athleteDtos = athletes.stream()
+                .map(CustomMapper.INSTANCE::mapAthleteToAthleteDto)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok().body(athleteDtos);
+    }
 
     // get athlete by id
     @Transactional
