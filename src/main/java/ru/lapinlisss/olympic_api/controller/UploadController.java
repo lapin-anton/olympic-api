@@ -2,10 +2,14 @@ package ru.lapinlisss.olympic_api.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import ru.lapinlisss.olympic_api.exception.UploadException;
 import ru.lapinlisss.olympic_api.service.UploadService;
 
 @Slf4j
@@ -16,16 +20,15 @@ public class UploadController {
 
     private final UploadService resultService;
 
-    @GetMapping("")
-    public ResponseEntity<String> getAllDecks() {
-        log.info("Income request to get test");
-        return ResponseEntity.ok().body("Hello!");
-    }
-
     @PostMapping("")
     public ResponseEntity<String> uploadData(@RequestParam("file") MultipartFile file) {
-        resultService.store(file);
-        return ResponseEntity.ok().body("");
+        ResponseEntity<String> response;
+        try {
+            response = new ResponseEntity<>(resultService.store(file), HttpStatus.OK);
+        } catch (UploadException e) {
+            response = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        return response;
     }
 
 }

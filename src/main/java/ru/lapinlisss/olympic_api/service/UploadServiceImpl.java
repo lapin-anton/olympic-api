@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import ru.lapinlisss.olympic_api.exception.UploadException;
 import ru.lapinlisss.olympic_api.model.*;
 import ru.lapinlisss.olympic_api.repository.*;
 
@@ -31,17 +32,24 @@ public class UploadServiceImpl implements UploadService {
     private static final int BUFFER_SIZE = 2000;
 
     @Override
-    public void store(MultipartFile file) {
-        log.info("Storing started...");
-        long start = new Date().getTime();
-        List<String[]> rows = getParsedRows(file);
-        storeGames(rows);
-        storeSports(rows);
-        storeCountries(rows);
-        storeAthletes(rows);
-        storeResults(rows);
-        long finish = new Date().getTime();
-        log.info("During {} seconds storing has been complete!", (finish - start) / 1000);
+    public String store(MultipartFile file) throws UploadException {
+        String report;
+        try {
+            log.info("Storing started...");
+            long start = new Date().getTime();
+            List<String[]> rows = getParsedRows(file);
+            storeGames(rows);
+            storeSports(rows);
+            storeCountries(rows);
+            storeAthletes(rows);
+            storeResults(rows);
+            long finish = new Date().getTime();
+            report = String.format("During %d seconds data storing has been complete!", (finish - start) / 1000);
+            log.info(report);
+        } catch (Exception e) {
+            throw new UploadException("File uploading went with errors");
+        }
+        return report;
     }
 
     private void storeGames(List<String[]> rows) {
