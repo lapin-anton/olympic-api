@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.lapinlisss.olympic_api.exception.UploadException;
-import ru.lapinlisss.olympic_api.model.*;
+import ru.lapinlisss.olympic_api.model.entity.*;
 import ru.lapinlisss.olympic_api.repository.*;
 
 import java.io.IOException;

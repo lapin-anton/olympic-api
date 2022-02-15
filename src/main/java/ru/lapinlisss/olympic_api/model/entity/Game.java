@@ -1,4 +1,4 @@
-package ru.lapinlisss.olympic_api.model;
+package ru.lapinlisss.olympic_api.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package ru.lapinlisss.olympic_api.model;
+package ru.lapinlisss.olympic_api.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,18 +13,16 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Builder
-@Table(name = "country")
-public class Country {
+@Table(name = "sport")
+public class Sport {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String trigger;
 
     private String name;
 
-    @OneToMany(mappedBy = "country")
-    private List<Athlete> athletes;
+    @OneToMany(mappedBy = "sport")
+    private List<Result> results;
 
 }
