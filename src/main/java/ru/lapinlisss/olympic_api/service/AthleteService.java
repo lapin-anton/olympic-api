@@ -9,4 +9,6 @@ public interface AthleteService {
     Athlete getAthleteById(Long id);
 
     List<Athlete> findAllAthletes();
+
+    List<Athlete> getAthletesByName(String name, String surname);
 }

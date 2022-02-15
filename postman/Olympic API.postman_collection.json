@@ -81,6 +81,35 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "athletes by name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/athlete?name=Rohullah&surname=Nikpai",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"athlete"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Rohullah"
+								},
+								{
+									"key": "surname",
+									"value": "Nikpai"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

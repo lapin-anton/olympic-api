@@ -4,10 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.lapinlisss.olympic_api.mapper.CustomMapper;
 import ru.lapinlisss.olympic_api.model.dto.AthleteDto;
 import ru.lapinlisss.olympic_api.model.entity.Athlete;
@@ -39,7 +36,7 @@ public class AthleteController {
     // get athlete by id
     @Transactional
     @GetMapping("/{id}")
-    public ResponseEntity<AthleteDto> getAthlete(@PathVariable Long id) {
+    public ResponseEntity<AthleteDto> getAthleteById(@PathVariable Long id) {
         log.info("Income request to get athlete by id {}", id);
         Athlete athlete = athleteService.getAthleteById(id);
         return athlete != null
@@ -48,6 +45,17 @@ public class AthleteController {
     }
 
     // get athlete by name
+    @Transactional
+    @GetMapping("")
+    public ResponseEntity<List<AthleteDto>> getAthletesByName(@RequestParam String name, @RequestParam String surname) {
+        log.info("Income request to get athletes by name {} and surname {}", name, surname);
+        List<Athlete> athletes = athleteService.getAthletesByName(name, surname);
+
+        List<AthleteDto> athleteDtos = athletes.stream()
+                .map(CustomMapper.INSTANCE::mapAthleteToAthleteDto)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok().body(athleteDtos);
+    }
 
     // get athletes by country
 

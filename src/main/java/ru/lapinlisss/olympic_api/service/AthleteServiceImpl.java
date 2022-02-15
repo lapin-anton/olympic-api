@@ -25,4 +25,9 @@ public class AthleteServiceImpl implements AthleteService {
         return athleteRepository.findAll();
     }
 
+    @Override
+    public List<Athlete> getAthletesByName(String name, String surname) {
+        return athleteRepository.findAllByNameOrSurname(name, surname);
+    }
+
 }
