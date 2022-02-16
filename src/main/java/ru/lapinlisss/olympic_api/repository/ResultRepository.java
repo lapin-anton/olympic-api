@@ -6,11 +6,10 @@ import ru.lapinlisss.olympic_api.model.entity.Game;
 import ru.lapinlisss.olympic_api.model.entity.Result;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface ResultRepository extends JpaRepository<Result, Long> {
 
-    Optional<List<Result>> findAllByGame(Game game);
+    List<Result> findAllByGame(Game game);
 
 }

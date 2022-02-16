@@ -15,6 +15,4 @@ public interface AthleteRepository extends JpaRepository<Athlete, Long> {
 
     List<Athlete> findAllByCountry(Country country);
 
-    List<Athlete> findAllByResults(Result result);
-
 }
