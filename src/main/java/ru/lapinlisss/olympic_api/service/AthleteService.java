@@ -12,7 +12,7 @@ public interface AthleteService {
 
     List<Athlete> getAthletesByName(String name, String surname);
 
-    List<Athlete> getAthletesByCountry(String country);
+    List<Athlete> getAthletesByCountry(String country, int page);
 
     List<Athlete> getAthletesByGame(String type, int year, int page);
 

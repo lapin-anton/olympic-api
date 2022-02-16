@@ -59,10 +59,10 @@ public class AthleteController {
 
     // get athletes by country
     @Transactional
-    @GetMapping("/country/{country}")
-    public ResponseEntity<List<AthleteDto>> getAthletesByCountry(@PathVariable String country) {
+    @GetMapping("/country")
+    public ResponseEntity<List<AthleteDto>> getAthletesByCountry(@RequestParam String country, @RequestParam int page) {
         log.info("Income request to get athletes by country {}", country);
-        List<Athlete> athletes = athleteService.getAthletesByCountry(country);
+        List<Athlete> athletes = athleteService.getAthletesByCountry(country, page);
 
         List<AthleteDto> athleteDtos = athletes.stream()
                 .map(CustomMapper.INSTANCE::mapAthleteToAthleteDto)

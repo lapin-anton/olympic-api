@@ -47,14 +47,17 @@ public class AthleteServiceImpl implements AthleteService {
     }
 
     @Override
-    public List<Athlete> getAthletesByCountry(String country) {
+    public List<Athlete> getAthletesByCountry(String country, int page) {
 
         List<Athlete> athletes = new ArrayList<>();
 
         Optional<Country> countryOptional = countryRepository.findCountryByNameIgnoreCase(country);
 
+        Pageable pageable = PageRequest.of(page, 20);
+
         if (countryOptional.isPresent()) {
-            athletes = athleteRepository.findAllByCountry(countryOptional.get());
+            athletes = athleteRepository.findAllByCountry(countryOptional.get(), pageable)
+                    .stream().collect(Collectors.toList());
         }
 
         return athletes;
