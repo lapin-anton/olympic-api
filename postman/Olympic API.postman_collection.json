@@ -138,6 +138,36 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "athletes by game",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/athlete/game?type=Summer&year=2008",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"athlete",
+								"game"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "Summer"
+								},
+								{
+									"key": "year",
+									"value": "2008"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
