@@ -11,4 +11,7 @@ public interface AthleteService {
     List<Athlete> findAllAthletes();
 
     List<Athlete> getAthletesByName(String name, String surname);
+
+    List<Athlete> getAthletesByCountry(String country);
+
 }

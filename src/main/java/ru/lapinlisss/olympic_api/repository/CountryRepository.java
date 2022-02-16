@@ -11,4 +11,6 @@ public interface CountryRepository extends JpaRepository<Country, Long> {
 
     Optional<Country> findCountryByTrigger(String trigger);
 
+    Optional<Country> findCountryByName(String name);
+
 }

@@ -110,6 +110,34 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "athletes by country",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/athlete/country/Afghanistan",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"athlete",
+								"country",
+								"Afghanistan"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
