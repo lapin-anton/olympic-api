@@ -2,6 +2,10 @@ package ru.lapinlisss.olympic_api.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.lapinlisss.olympic_api.model.entity.Athlete;
 import ru.lapinlisss.olympic_api.model.entity.Country;
@@ -9,7 +13,6 @@ import ru.lapinlisss.olympic_api.model.entity.Game;
 import ru.lapinlisss.olympic_api.model.entity.Result;
 import ru.lapinlisss.olympic_api.repository.AthleteRepository;
 import ru.lapinlisss.olympic_api.repository.CountryRepository;
-import ru.lapinlisss.olympic_api.repository.ResultRepository;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -58,14 +61,16 @@ public class AthleteServiceImpl implements AthleteService {
     }
 
     @Override
-    public List<Athlete> getAthletesByGame(String type, int year) {
+    public List<Athlete> getAthletesByGame(String type, int year, int page) {
 
         List<Athlete> athletes = new ArrayList<>();
 
         Game game = gameService.getGameByTypeAndYear(type, year);
 
+        Pageable pageable = PageRequest.of(page, 100);
+
         if (game != null) {
-            List<Result> results = resultService.getResultsByGame(game);
+            Page<Result> results = resultService.getResultsByGame(game, pageable);
             List<Athlete> athletesPrep = results.stream().map(Result::getAthlete)
                     .collect(Collectors.toList());
 

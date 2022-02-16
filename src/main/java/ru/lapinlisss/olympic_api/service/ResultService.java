@@ -1,12 +1,12 @@
 package ru.lapinlisss.olympic_api.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import ru.lapinlisss.olympic_api.model.entity.Game;
 import ru.lapinlisss.olympic_api.model.entity.Result;
 
-import java.util.List;
-
 public interface ResultService {
 
-    List<Result> getResultsByGame(Game game);
+    Page<Result> getResultsByGame(Game game, Pageable pageable);
 
 }

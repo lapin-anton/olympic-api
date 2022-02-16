@@ -73,9 +73,9 @@ public class AthleteController {
     // get athletes by game
     @Transactional
     @GetMapping("/game")
-    public ResponseEntity<List<AthleteDto>> getAthletesByGame(@RequestParam String type, @RequestParam int year) {
+    public ResponseEntity<List<AthleteDto>> getAthletesByGame(@RequestParam String type, @RequestParam int year, @RequestParam int page) {
         log.info("Income request to get athletes by game type {} and year {}", type, year);
-        List<Athlete> athletes = athleteService.getAthletesByGame(type, year);
+        List<Athlete> athletes = athleteService.getAthletesByGame(type, year, page);
 
         List<AthleteDto> athleteDtos = athletes.stream()
                 .map(CustomMapper.INSTANCE::mapAthleteToAthleteDto)

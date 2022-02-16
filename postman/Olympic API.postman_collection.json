@@ -145,7 +145,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/athlete/game?type=Summer&year=2008",
+							"raw": "http://localhost:8080/athlete/game?type=Summer&year=2008&page=5",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -163,6 +163,10 @@
 								{
 									"key": "year",
 									"value": "2008"
+								},
+								{
+									"key": "page",
+									"value": "5"
 								}
 							]
 						}
