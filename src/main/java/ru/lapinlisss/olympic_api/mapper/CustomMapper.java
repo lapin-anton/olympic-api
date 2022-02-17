@@ -16,6 +16,8 @@ public interface CustomMapper {
     
     CountryDto mapCountryToCountryDto(Country country);
 
+    AthleteDtoWithoutResults mapAthleteToAthleteDtoWithoutResults(Athlete athlete);
+
     ResultDto mapResultToResultDto(Result result);
 
     AthleteDto mapAthleteToAthleteDto(Athlete athlete);

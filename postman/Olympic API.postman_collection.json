@@ -209,6 +209,19 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "results",
+			"item": [
+				{
+					"name": "get results by game",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }

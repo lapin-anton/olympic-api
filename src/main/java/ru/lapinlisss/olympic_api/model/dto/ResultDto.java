@@ -17,6 +17,8 @@ public class ResultDto {
 
     private SportDto sport;
 
+    private AthleteDtoWithoutResults athlete;
+
     private Integer athleteRank;
 
     private Integer athleteAge;
