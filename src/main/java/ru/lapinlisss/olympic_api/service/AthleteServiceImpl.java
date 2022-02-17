@@ -84,5 +84,30 @@ public class AthleteServiceImpl implements AthleteService {
         return athletes;
     }
 
+    @Override
+    public List<Athlete> getAthletesByGameAndCountry(String type, int year, String countryName) {
+        List<Athlete> athletes = new ArrayList<>();
+
+        Optional<Country> countryOptional = countryRepository.findCountryByNameIgnoreCase(countryName);
+
+        if (countryOptional.isPresent()) {
+            List<Athlete> athletesByCountry = athleteRepository.findAllByCountry(countryOptional.get());
+
+            Game game = gameService.getGameByTypeAndYear(type, year);
+
+            if (game != null) {
+                athletes = athletesByCountry.stream().filter(athlete -> {
+                    for (Result r: athlete.getResults()) {
+                        if (r.getGame().getType().equals(type) && r.getGame().getYear() == year)
+                            return true;
+                    }
+                    return false;
+                }).collect(Collectors.toList());
+            }
+        }
+
+        return athletes;
+    }
+
 
 }

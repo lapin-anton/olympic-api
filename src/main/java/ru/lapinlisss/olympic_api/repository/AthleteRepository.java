@@ -18,4 +18,6 @@ public interface AthleteRepository extends JpaRepository<Athlete, Long> {
 
     Page<Athlete> findAllByCountry(Country country, Pageable pageable);
 
+    List<Athlete> findAllByCountry(Country country);
+
 }

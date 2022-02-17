@@ -172,6 +172,41 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "athletes by game and country",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/athlete/game/country?type=Summer&year=2008&country=Russia",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"athlete",
+								"game",
+								"country"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "Summer"
+								},
+								{
+									"key": "year",
+									"value": "2008"
+								},
+								{
+									"key": "country",
+									"value": "Russia"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

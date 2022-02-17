@@ -16,4 +16,5 @@ public interface AthleteService {
 
     List<Athlete> getAthletesByGame(String type, int year, int page);
 
+    List<Athlete> getAthletesByGameAndCountry(String type, int year, String country);
 }

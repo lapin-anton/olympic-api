@@ -82,7 +82,19 @@ public class AthleteController {
                 .collect(Collectors.toList());
         return ResponseEntity.ok().body(athleteDtos);
     }
-    // get athletes by country, game and sport
+
+    // get athletes by game and country
+    @Transactional
+    @GetMapping("/game/country")
+    public ResponseEntity<List<AthleteDto>> getAthletesByGameAndCountry(@RequestParam String type, @RequestParam int year, @RequestParam String country) {
+        log.info("Income request to get athletes by game type {} and year {}", type, year);
+        List<Athlete> athletes = athleteService.getAthletesByGameAndCountry(type, year, country);
+
+        List<AthleteDto> athleteDtos = athletes.stream()
+                .map(CustomMapper.INSTANCE::mapAthleteToAthleteDto)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok().body(athleteDtos);
+    }
 
     // ...
 
