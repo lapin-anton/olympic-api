@@ -12,6 +12,8 @@ import java.util.List;
 @Repository
 public interface AthleteRepository extends JpaRepository<Athlete, Long> {
 
+    Page<Athlete> findAll(Pageable pageable);
+
     List<Athlete> findAllByNameOrSurname(String name, String surname);
 
     Page<Athlete> findAllByCountry(Country country, Pageable pageable);

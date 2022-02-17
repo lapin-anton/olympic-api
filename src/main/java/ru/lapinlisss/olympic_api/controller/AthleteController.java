@@ -24,9 +24,9 @@ public class AthleteController {
     // get all
     @Transactional
     @GetMapping("/all")
-    public ResponseEntity<List<AthleteDto>> getAllAthletes() {
+    public ResponseEntity<List<AthleteDto>> getAllAthletes(@RequestParam int page) {
         log.info("Income request to get all athletes");
-        List<Athlete> athletes = athleteService.findAllAthletes();
+        List<Athlete> athletes = athleteService.findAllAthletes(page);
         List<AthleteDto> athleteDtos = athletes.stream()
                 .map(CustomMapper.INSTANCE::mapAthleteToAthleteDto)
                 .collect(Collectors.toList());

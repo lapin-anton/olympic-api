@@ -8,7 +8,7 @@ public interface AthleteService {
 
     Athlete getAthleteById(Long id);
 
-    List<Athlete> findAllAthletes();
+    List<Athlete> findAllAthletes(int page);
 
     List<Athlete> getAthletesByName(String name, String surname);
 

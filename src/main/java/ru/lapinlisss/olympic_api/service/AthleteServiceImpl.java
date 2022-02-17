@@ -37,8 +37,10 @@ public class AthleteServiceImpl implements AthleteService {
     }
 
     @Override
-    public List<Athlete> findAllAthletes() {
-        return athleteRepository.findAll();
+    public List<Athlete> findAllAthletes(int page) {
+        Pageable pageable = PageRequest.of(page, 100);
+
+        return athleteRepository.findAll(pageable).toList();
     }
 
     @Override
@@ -56,8 +58,7 @@ public class AthleteServiceImpl implements AthleteService {
         Pageable pageable = PageRequest.of(page, 20);
 
         if (countryOptional.isPresent()) {
-            athletes = athleteRepository.findAllByCountry(countryOptional.get(), pageable)
-                    .stream().collect(Collectors.toList());
+            athletes = athleteRepository.findAllByCountry(countryOptional.get(), pageable).toList();
         }
 
         return athletes;
