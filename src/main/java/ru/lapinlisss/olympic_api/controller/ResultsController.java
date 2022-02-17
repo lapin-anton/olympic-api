@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.lapinlisss.olympic_api.mapper.CustomMapper;
-import ru.lapinlisss.olympic_api.model.dto.AthleteDto;
 import ru.lapinlisss.olympic_api.model.dto.ResultDto;
 import ru.lapinlisss.olympic_api.model.entity.Result;
+import ru.lapinlisss.olympic_api.model.response.CountryTeamRatingItem;
 import ru.lapinlisss.olympic_api.service.ResultService;
 
 import java.util.List;
@@ -29,7 +29,7 @@ public class ResultsController {
     @Transactional
     @GetMapping("/game/all")
     public ResponseEntity<List<ResultDto>> getAllResults(@RequestParam String type, @RequestParam int year, @RequestParam int page) {
-        log.info("Income request to get all results");
+        log.info("Income request to get all results by game type {} year {}", type, year);
         List<Result> results = resultService.getAllResultsByGame(type, year, page);
         List<ResultDto> resultDtos = results.stream()
                 .map(CustomMapper.INSTANCE::mapResultToResultDto)
@@ -38,5 +38,11 @@ public class ResultsController {
     }
 
     // get country team's rating by game
-
+    @Transactional
+    @GetMapping("/team/rating/game")
+    public ResponseEntity<List<CountryTeamRatingItem>> getCountryTeamRatingByGame(@RequestParam String type, @RequestParam int year) {
+        log.info("Income request to get country team's rating by game type {} year {}", type, year);
+        List<CountryTeamRatingItem> countryTeamRatingByGame = resultService.getCountryTeamRatingByGame(type, year);
+        return ResponseEntity.ok().body(countryTeamRatingByGame);
+    }
 }

@@ -7,9 +7,13 @@ import org.springframework.stereotype.Repository;
 import ru.lapinlisss.olympic_api.model.entity.Game;
 import ru.lapinlisss.olympic_api.model.entity.Result;
 
+import java.util.List;
+
 @Repository
 public interface ResultRepository extends JpaRepository<Result, Long> {
 
     Page<Result> findAllByGame(Game game, Pageable pageable);
+
+    List<Result> findAllByGame(Game game);
 
 }
