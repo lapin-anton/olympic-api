@@ -48,6 +48,15 @@ create table result (
     foreign key (athlete_id) references athlete(id)
 );
 
+create table game_info(
+    id serial not null,
+    game_id integer not null,
+    city varchar(256) not null,
+    thumbnail_url text not null,
+    description text,
+    foreign key (game_id) references game(id)
+);
+
 -- drop table result;
 --
 -- drop table athlete;
