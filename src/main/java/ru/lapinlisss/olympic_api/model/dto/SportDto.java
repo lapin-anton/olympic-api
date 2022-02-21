@@ -15,4 +15,6 @@ public class SportDto {
 
     private String name;
 
+    private String thumbnailUrl;
+
 }

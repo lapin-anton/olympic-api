@@ -17,4 +17,8 @@ public class GameDto {
 
     private Integer year;
 
+    private String thumbnailUrl;
+
+    private String description;
+
 }

@@ -22,6 +22,8 @@ public class Sport {
 
     private String name;
 
+    private String thumbnailUrl;
+
     @OneToMany(mappedBy = "sport")
     private List<Result> results;
 

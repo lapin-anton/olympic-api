@@ -24,6 +24,10 @@ public class Game {
 
     private Integer year;
 
+    private String thumbnailUrl;
+
+    private String description;
+
     @OneToMany(mappedBy = "game")
     private List<Result> results;
 }

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "a37daa34-f125-4ea4-8913-331eb951451c",
+		"_postman_id": "d07bfd0a-f9b6-48dd-91ca-efd69568ae22",
 		"name": "Olympic API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -217,7 +217,10 @@
 					"name": "get results by game",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
@@ -225,7 +228,60 @@
 					"name": "get country team's rating by game",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "games",
+			"item": [
+				{
+					"name": "get all games",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/game/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"game",
+								"all"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "sports",
+			"item": [
+				{
+					"name": "get all sports",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/sport/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sport",
+								"all"
+							]
+						}
 					},
 					"response": []
 				}
