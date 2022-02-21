@@ -1,0 +1,72 @@
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/taekwondo.svg' where name='Taekwondo';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/athletics.svg' where name='Athletics';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/boxing.svg' where name='Boxing';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/judo.svg' where name='Judo';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/wrestling.svg' where name='Wrestling';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/hockey.svg' where name='Hockey';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/football.svg' where name='Football';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/alpine-skiing.svg' where name='Alpine Skiing';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/weightlifting.svg' where name='Weightlifting';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/swimming.svg' where name='Swimming';
+
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/shooting.svg' where name='Shooting';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/cycling-track.svg' where name='Cycling';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/volleyball.svg' where name='Volleyball';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/fencing.svg' where name='Fencing';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/rowing.svg' where name='Rowing';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/cross-country-skiing.svg' where name='Cross Country Skiing';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/table-tennis.svg' where name='Table Tennis';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/badminton.svg' where name='Badminton';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/tennis.svg' where name='Tennis';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/trampoline-gymnastics.svg' where name='Trampolining';
+
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/handball.svg' where name='Handball';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/artistic-gymnastics.svg' where name='Gymnastics';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/archery.svg' where name='Archery';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/sailing.svg' where name='Sailing';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/bobsleigh.svg' where name='Bobsleigh';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/snowboard.svg' where name='Snowboarding';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/biathlon.svg' where name='Biathlon';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/canoe-kayak-flatwater.svg' where name='Canoeing';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/basketball.svg' where name='Basketball';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/beach-volleyball.svg' where name='Beach Volleyball';
+
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/equestrian.svg' where name='Equestrianism';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/artistic-swimming.svg' where name='Synchronized Swimming';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/triathlon.svg' where name='Triathlon';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/luge.svg' where name='Luge';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/freestyle-skiing.svg' where name='Freestyle Skiing';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/skeleton.svg' where name='Skeleton';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/diving.svg' where name='Diving';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/modern-pentathlon.svg' where name='Modern Pentathlon';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/water-polo.svg' where name='Water Polo';
+update sport set thumbnail_url = '' where name='None';
+
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/equestrian.svg' where name='Polo';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/acrobatic-gymnastics.svg' where name='Art Competitions';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/figure-skating.svg' where name='Figure Skating';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/rugby-sevens.svg' where name='Rugby';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/short-track-speed-skating.svg' where name='Short Track Speed Skating';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/speed-skating.svg' where name='Speed Skating';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/rhythmic-gymnastics.svg' where name='Rhythmic Gymnastics';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/baseball-softball.svg' where name='Softball';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/baseball-softball.svg' where name='Baseball';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/ice-hockey.svg' where name='Ice Hockey';
+
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/nordic-combined.svg' where name='Nordic Combined';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/sport-climbing.svg' where name='Alpinism';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/ski-jumping.svg' where name='Ski Jumping';
+update sport set thumbnail_url = '' where name='Tug-Of-War';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/curling.svg' where name='Curling';
+update sport set thumbnail_url = '' where name='Lacrosse';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/golf.svg' where name='Golf';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/ski-mountaineering.svg' where name='Military Ski Patrol';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/sailing.svg' where name='Motorboating';
+update sport set thumbnail_url = '' where name='Croquet';
+
+update sport set thumbnail_url = '' where name='Cricket';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/badminton.svg' where name='Racquets';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/badminton.svg' where name='Jeu De Paume';
+update sport set thumbnail_url = 'https://olympics.com/images/static/sports/pictograms/baseball-softball.svg' where name='Basque Pelota';
+update sport set thumbnail_url = '' where name='Aeronautics';
+update sport set thumbnail_url = '' where name='Roque';

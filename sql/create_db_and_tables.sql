@@ -57,12 +57,18 @@ create table game_info(
     foreign key (game_id) references game(id)
 );
 
--- drop table result;
---
--- drop table athlete;
---
--- drop table country;
---
--- drop table sport;
---
--- drop table game;
+alter table game add column city varchar(256);
+alter table game add column thumbnail_url text;
+alter table game add column description text;
+
+alter table sport add column thumbnail_url text;
+
+drop table result;
+
+drop table athlete;
+
+drop table country;
+
+drop table sport;
+
+drop table game;
