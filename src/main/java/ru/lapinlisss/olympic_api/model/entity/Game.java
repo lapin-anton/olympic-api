@@ -24,6 +24,9 @@ public class Game {
 
     private Integer year;
 
+    private String city;
+
+    @Column(name="thumbnail_url")
     private String thumbnailUrl;
 
     private String description;

@@ -21,4 +21,4 @@ class ServiceUtil {
     }
 }
 
-export default ServiceUtil;
+export default new ServiceUtil;

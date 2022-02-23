@@ -12,6 +12,7 @@ import ru.lapinlisss.olympic_api.model.dto.GameDto;
 import ru.lapinlisss.olympic_api.model.entity.Game;
 import ru.lapinlisss.olympic_api.repository.GameRepository;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,6 +33,8 @@ public class GameController {
         List<Game> games = gameRepository.findAll();
 
         games.sort(Comparator.comparingInt(Game::getYear));
+
+        Collections.reverse(games);
 
         List<GameDto> gameDtos = games.stream()
                 .map(CustomMapper.INSTANCE::mapGameToGameDto)

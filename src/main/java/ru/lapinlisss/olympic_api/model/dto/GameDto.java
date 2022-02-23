@@ -17,6 +17,8 @@ public class GameDto {
 
     private Integer year;
 
+    private String city;
+
     private String thumbnailUrl;
 
     private String description;
