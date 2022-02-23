@@ -63,12 +63,12 @@ alter table game add column description text;
 
 alter table sport add column thumbnail_url text;
 
-drop table result;
-
-drop table athlete;
-
-drop table country;
-
-drop table sport;
-
-drop table game;
+-- drop table result;
+--
+-- drop table athlete;
+--
+-- drop table country;
+--
+-- drop table sport;
+--
+-- drop table game;
