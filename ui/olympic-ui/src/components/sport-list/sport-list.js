@@ -43,9 +43,8 @@ class SportList extends Component {
                             if (i % 6 === 0) {
                                 return (
                                     <Grid container item spacing={3} marginBottom={3} >
-                                        <Row className={classes.listRow}
+                                        <Row
                                             sports={sports.slice(i, i + 6)}
-                                            classes={classes}
                                         />
                                     </Grid>
                                 )
@@ -61,12 +60,12 @@ class SportList extends Component {
 
 function Row(props) {
 
-    const {sports, classes} = props;
+    const {sports} = props;
 
     return (
         <>
             {sports.map(sport =>
-                <Grid item xs={2} className={classes.listItem}>
+                <Grid item xs={2}>
                     <SportCard
                         img={sport.thumbnailUrl}
                         name={sport.name}
