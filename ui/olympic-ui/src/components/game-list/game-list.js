@@ -1,8 +1,12 @@
 import {Grid} from "@mui/material";
 import Box from "@mui/material/Box";
+import { withStyles } from '@mui/styles';
+
 import GameCard from "../game-card/game-card";
 import {Component} from "react";
 import GameService from "../../services/game-service";
+
+import {styles} from "../../css-common";
 
 class GameList extends Component {
 
@@ -32,9 +36,11 @@ class GameList extends Component {
     render () {
 
         const {games} = this.state;
+        const {classes} = this.props;
 
         return (
             <Box sx={{ flexGrow: 1 }} padding={6}>
+                <h1 className={classes.listHead}>Olympics Game List</h1>
                 <Grid container spacing={1}>
                     {games.map((game, i) => {
                             if (i % 4 === 0) {
@@ -73,4 +79,4 @@ function Row(props) {
     );
 }
 
-export default GameList;
+export default withStyles(styles)(GameList);

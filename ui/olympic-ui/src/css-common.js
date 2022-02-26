@@ -6,6 +6,14 @@ export const styles = {
         color: "#fff",
         margin: "0 10px",
         textDecoration: "unset"
+    },
+    cardContent: {
+        textAlign: "center",
+        textTransform: "uppercase"
+    },
+    listHead: {
+        textTransform: "uppercase",
+        textAlign: "center"
     }
 }
 
