@@ -1,44 +1,56 @@
-import {Component} from "react";
+import * as React from "react";
 import './App.css';
-import NavBar from "./components/nav-bar/nav-bar";
+
+import Home from './pages/home-page/home-page';
 import GameList from "./components/game-list/game-list";
-import GameService from "./services/game-service";
+import SportList from "./components/sport-list/sport-list";
 
-class App extends Component {
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import AppBar from "@mui/material/AppBar";
+import {Link, Route, Switch} from 'react-router-dom';
+import {Box} from "@mui/material";
 
-  constructor(props) {
-      super(props);
-      this.fetchGames = this.fetchGames.bind(this);
-      this.state = {
-          gameList: []
-      }
-  }
+export default function App() {
 
-  componentDidMount() {
-      this.fetchGames();
-  }
-
-  async fetchGames() {
-      await GameService.getAllGames()
-          .then(response =>
-              this.setState({
-                  gameList: response.data
-          }))
-          .catch(e =>
-              console.log(e)
-          )
-  }
-
-  render() {
-      return (
-          <div className="App">
-              <NavBar />
-              <GameList
-                  games={this.state.gameList} />
-          </div>
-      );
-  }
+    return (
+        <div>
+            <AppBar position="static">
+                <Toolbar>
+                    <Typography>
+                        <Box fontWeight={"fontWeightBold"}>
+                            Olympic UI
+                        </Box>
+                    </Typography>
+                    <Link to={"/"}>
+                        <Typography variant="body2">
+                            Home
+                        </Typography>
+                    </Link>
+                    <Link to={"/games"}>
+                        <Typography variant="body2">
+                            Games
+                        </Typography>
+                    </Link>
+                    <Link to={"/sports"}>
+                        <Typography variant="body2">
+                            Sports
+                        </Typography>
+                    </Link>
+                    {/*<Link to={"/athletes"}>*/}
+                    {/*    <Typography variant="body2">*/}
+                    {/*        Athletes*/}
+                    {/*    </Typography>*/}
+                    {/*</Link>*/}
+                </Toolbar>
+            </AppBar>
+            <Switch>
+                <Route exact path="/" component={Home}/>
+                <Route exact path="/games" component={GameList}/>
+                <Route exact path="/sports" component={SportList}/>
+                {/*<Route exact path="/athletes" component={GameList}/>*/}
+            </Switch>
+        </div>
+    );
 
 }
-
-export default App;
