@@ -10,29 +10,34 @@ import Typography from "@mui/material/Typography";
 import AppBar from "@mui/material/AppBar";
 import {Link, Route, Switch} from 'react-router-dom';
 import {Box} from "@mui/material";
+import { withStyles } from '@mui/styles';
 
-export default function App() {
+import {styles} from "./css-common";
+
+function App(props) {
+
+    const {classes} = props;
 
     return (
         <div>
-            <AppBar position="static">
+            <AppBar position="fixed">
                 <Toolbar>
                     <Typography>
                         <Box fontWeight={"fontWeightBold"}>
                             Olympic UI
                         </Box>
                     </Typography>
-                    <Link to={"/"}>
+                    <Link to={"/"} className={classes.link}>
                         <Typography variant="body2">
                             Home
                         </Typography>
                     </Link>
-                    <Link to={"/games"}>
+                    <Link to={"/games"} className={classes.link}>
                         <Typography variant="body2">
                             Games
                         </Typography>
                     </Link>
-                    <Link to={"/sports"}>
+                    <Link to={"/sports"} className={classes.link}>
                         <Typography variant="body2">
                             Sports
                         </Typography>
@@ -54,3 +59,5 @@ export default function App() {
     );
 
 }
+
+export default withStyles(styles)(App);
