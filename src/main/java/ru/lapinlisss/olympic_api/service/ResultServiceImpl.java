@@ -45,10 +45,10 @@ public class ResultServiceImpl implements ResultService {
     }
 
     @Override
-    public List<CountryTeamRatingItem> getCountryTeamRatingByGame(String type, int year) {
+    public List<CountryTeamRatingItem> getCountryTeamRatingByGame(long id) {
         List<CountryTeamRatingItem> rating = new ArrayList<>();
 
-        List<ResultDto> resultDtos = getAllResultsByGame(type, year);
+        List<ResultDto> resultDtos = getAllResultsByGame(id);
 
         Map<String, List<ResultDto>> resultsByCountry = new HashMap<>();
 
@@ -91,11 +91,11 @@ public class ResultServiceImpl implements ResultService {
         return rating;
     }
 
-    private List<ResultDto> getAllResultsByGame(String type, int year) {
+    private List<ResultDto> getAllResultsByGame(long id) {
 
         List<Result> results = new ArrayList<>();
 
-        Optional<Game> gameOptional = gameRepository.findGameByTypeAndYear(type, year);
+        Optional<Game> gameOptional = gameRepository.findById(id);
 
         if (gameOptional.isPresent()) {
             results = resultRepository.findAllByGame(gameOptional.get());

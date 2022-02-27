@@ -67,6 +67,7 @@ function Row(props) {
             {games.map(game =>
                 <Grid item xs={3}>
                     <GameCard
+                        id={game.id}
                         img={game.thumbnailUrl}
                         city={game.city}
                         year={game.year}

@@ -4,10 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.lapinlisss.olympic_api.mapper.CustomMapper;
 import ru.lapinlisss.olympic_api.model.dto.ResultDto;
 import ru.lapinlisss.olympic_api.model.entity.Result;
@@ -37,12 +34,12 @@ public class ResultsController {
         return ResponseEntity.ok().body(resultDtos);
     }
 
-    // get country team's rating by game
+    // get country team's rating by game id
     @Transactional
-    @GetMapping("/team/rating/game")
-    public ResponseEntity<List<CountryTeamRatingItem>> getCountryTeamRatingByGame(@RequestParam String type, @RequestParam int year) {
-        log.info("Income request to get country team's rating by game type {} year {}", type, year);
-        List<CountryTeamRatingItem> countryTeamRatingByGame = resultService.getCountryTeamRatingByGame(type, year);
+    @GetMapping("/team/rating/game/{id}")
+    public ResponseEntity<List<CountryTeamRatingItem>> getCountryTeamRatingByGameId(@PathVariable Long id) {
+        log.info("Income request to get country team's rating by game id {}", id);
+        List<CountryTeamRatingItem> countryTeamRatingByGame = resultService.getCountryTeamRatingByGame(id);
         return ResponseEntity.ok().body(countryTeamRatingByGame);
     }
 }

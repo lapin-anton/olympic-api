@@ -5,6 +5,8 @@ import Home from './pages/home-page/home-page';
 import GameList from "./components/game-list/game-list";
 import SportList from "./components/sport-list/sport-list";
 
+import GamePage from './pages/games-page/game-page';
+
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import AppBar from "@mui/material/AppBar";
@@ -54,6 +56,8 @@ function App(props) {
                 <Route exact path="/games" component={GameList}/>
                 <Route exact path="/sports" component={SportList}/>
                 {/*<Route exact path="/athletes" component={GameList}/>*/}
+
+                <Route exact path="/game/:id" component={GamePage}/>
             </Switch>
         </div>
     );

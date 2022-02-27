@@ -14,5 +14,5 @@ public interface ResultService {
 
     List<Result> getAllResultsByGame(String type, int year, int page);
 
-    List<CountryTeamRatingItem> getCountryTeamRatingByGame(String type, int year);
+    List<CountryTeamRatingItem> getCountryTeamRatingByGame(long id);
 }

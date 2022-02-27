@@ -6,10 +6,10 @@ class ResultsService {
         return ServiceUtil.call("get", null, `/results/game/all?type=${type}&year=${year}&page=${page}`);
     }
 
-    getCountryTeamRatingByGame(type, year) {
-        return ServiceUtil.call("get", null, `/results/rating/game?type=${type}&year=${year}`);
+    getCountryTeamRatingByGame(id) {
+        return ServiceUtil.call("get", null, `/results/team/rating/game/${id}`);
     }
 
 }
 
-export default ResultsService;
+export default new ResultsService;

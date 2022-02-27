@@ -14,6 +14,10 @@ export const styles = {
     listHead: {
         textTransform: "uppercase",
         textAlign: "center"
+    },
+    pageHead: {
+        textTransform: "uppercase",
+        textAlign: "center"
     }
 }
 
