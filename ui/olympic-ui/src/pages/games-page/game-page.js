@@ -4,12 +4,13 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
-import {Container, Grid, Paper, TableHead} from "@mui/material";
+import {Container, Grid, Paper, TableFooter, TableHead, TablePagination} from "@mui/material";
 import {withStyles} from '@mui/styles';
 import {styles} from "../../css-common";
 
 import GameService from '../../services/game-service';
 import ResultsService from "../../services/results-service";
+import TablePaginationActions from "@mui/material/TablePagination/TablePaginationActions";
 
 
 class GamePage extends Component {
@@ -18,7 +19,9 @@ class GamePage extends Component {
         this.state = {
             game: null,
             rating: [],
-            athleteCount: 0
+            athleteCount: 0,
+            rowsPerPage: 5,
+            page: 0
         }
     }
 
@@ -43,11 +46,26 @@ class GamePage extends Component {
             .catch(e => console.log(e));
     }
 
+    handleChangePage = (event, newPage) => {
+        this.setState({
+            page: newPage
+        });
+    };
+
+    handleChangeRowsPerPage = (event) => {
+        this.setState({
+            rowsPerPage: parseInt(event.target.value, 10),
+            page: 0
+        });
+    };
+
     render() {
 
-        const {game, rating, athleteCount} = this.state;
+        const {game, rating, athleteCount, rowsPerPage, page} = this.state;
 
         const {classes} = this.props;
+
+        const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rating.length) : 0;
 
         return (
             <Container maxWidth="lg">
@@ -100,6 +118,13 @@ class GamePage extends Component {
                                             <TableCell component="th" scope="row">Athletes</TableCell>
                                             <TableCell align="center">{athleteCount}</TableCell>
                                         </TableRow>
+                                        <TableRow
+                                            key={"type"}
+                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                        >
+                                            <TableCell component="th" scope="row">Sports</TableCell>
+                                            <TableCell align="center">111</TableCell>
+                                        </TableRow>
                                     </TableBody>
                                 </Table>
                             </TableContainer>
@@ -107,44 +132,77 @@ class GamePage extends Component {
                 </Grid>
                 <Grid container spacing={1}>
                     <Grid item xs={12}>
-                        <h2>Unofficial Team Medal Count</h2>
+                        <h2 className={classes.listHead}>Unofficial Team Medal Count</h2>
                         <TableContainer component={Paper}>
                             <Table aria-label="simple table">
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell>Place</TableCell>
-                                        <TableCell>Country's Team</TableCell>
-                                        <TableCell>Gold</TableCell>
-                                        <TableCell>Silver</TableCell>
-                                        <TableCell>Bronze</TableCell>
-                                        <TableCell>Total</TableCell>
+                                        <TableCell align="center">Place</TableCell>
+                                        <TableCell align="center">Country's Team</TableCell>
+                                        <TableCell align="center">Gold</TableCell>
+                                        <TableCell align="center">Silver</TableCell>
+                                        <TableCell align="center">Bronze</TableCell>
+                                        <TableCell align="center">Total</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {rating && rating.map((r, i) => {
+                                    {(rowsPerPage > 0
+                                            ? rating.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                            : rating
+                                    ).map((r, i) => {
+
+                                        const place = page * rowsPerPage + i + 1;
 
                                         let rowStyle = classes.commonRowColor;
 
-                                        if (i === 0) {
+                                        if (place === 1) {
                                             rowStyle = classes.goldColor;
                                         }
-                                        if (i === 1) {
+
+                                        if (place === 2) {
                                             rowStyle = classes.silverColor;
                                         }
-                                        if (i === 2) {
+
+                                        if (place === 3) {
                                             rowStyle = classes.bronzeColor;
                                         }
 
                                         return (<TableRow className={rowStyle}>
-                                            <TableCell>{i + 1}</TableCell>
-                                            <TableCell>{r.country}</TableCell>
-                                            <TableCell>{r.gold}</TableCell>
-                                            <TableCell>{r.silver}</TableCell>
-                                            <TableCell>{r.bronze}</TableCell>
-                                            <TableCell>{r.total}</TableCell>
-                                        </TableRow>);
+                                            <TableCell align="center">{place}</TableCell>
+                                            <TableCell align="center">{r.country}</TableCell>
+                                            <TableCell align="center">{r.gold}</TableCell>
+                                            <TableCell align="center">{r.silver}</TableCell>
+                                            <TableCell align="center">{r.bronze}</TableCell>
+                                            <TableCell align="center">{r.total}</TableCell>
+                                        </TableRow>)
                                     })}
+
+                                    {emptyRows > 0 && (
+                                        <TableRow style={{ height: 53 * emptyRows }}>
+                                            <TableCell colSpan={6} />
+                                        </TableRow>
+                                    )}
                                 </TableBody>
+                                <TableFooter>
+                                    <TableRow>
+                                        <TablePagination
+                                            rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                                            colSpan={3}
+                                            count={rating.length}
+                                            rowsPerPage={rowsPerPage}
+                                            page={page}
+                                            SelectProps={{
+                                                inputProps: {
+                                                    'aria-label': 'rows per page',
+                                                },
+                                                native: true,
+                                            }}
+                                            onPageChange={this.handleChangePage}
+                                            onRowsPerPageChange={this.handleChangeRowsPerPage}
+                                            ActionsComponent={TablePaginationActions}
+                                        />
+                                    </TableRow>
+                                </TableFooter>
                             </Table>
                         </TableContainer>
                     </Grid>
