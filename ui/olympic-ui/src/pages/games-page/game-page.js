@@ -17,7 +17,8 @@ class GamePage extends Component {
         super(props);
         this.state = {
             game: null,
-            rating: []
+            rating: [],
+            athleteCount: 0
         }
     }
 
@@ -35,11 +36,16 @@ class GamePage extends Component {
             .then(response => {
                 this.setState({rating: response.data})})
             .catch(e => console.log(e));
+        GameService.getAthletesCountByGameId(id)
+            .then(response => {
+                this.setState({athleteCount: response.data.athleteCount});
+            })
+            .catch(e => console.log(e));
     }
 
     render() {
 
-        const {game, rating} = this.state;
+        const {game, rating, athleteCount} = this.state;
 
         const {classes} = this.state;
 
@@ -77,7 +83,7 @@ class GamePage extends Component {
                                             key={"type"}
                                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                         >
-                                            <TableCell component="th" scope="row">Type</TableCell>
+                                            <TableCell component="th" scope="row">Season</TableCell>
                                             <TableCell align="center">{game && game.type}</TableCell>
                                         </TableRow>
                                         <TableRow
@@ -92,7 +98,7 @@ class GamePage extends Component {
                                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                         >
                                             <TableCell component="th" scope="row">Athletes</TableCell>
-                                            <TableCell align="center">12345</TableCell>
+                                            <TableCell align="center">{athleteCount}</TableCell>
                                         </TableRow>
                                     </TableBody>
                                 </Table>

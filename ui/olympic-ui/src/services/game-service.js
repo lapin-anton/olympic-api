@@ -10,6 +10,10 @@ class GameService {
         return ServiceUtil.call("get", null, `/game/${id}`);
     }
 
+    getAthletesCountByGameId(id) {
+        return ServiceUtil.call("get", null, `/game/${id}/athletes`)
+    }
+
 }
 
 export default new GameService;

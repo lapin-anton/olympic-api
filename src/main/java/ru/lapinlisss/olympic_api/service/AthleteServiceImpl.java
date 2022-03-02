@@ -7,12 +7,15 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import ru.lapinlisss.olympic_api.mapper.CustomMapper;
+import ru.lapinlisss.olympic_api.model.dto.ResultDto;
 import ru.lapinlisss.olympic_api.model.entity.Athlete;
 import ru.lapinlisss.olympic_api.model.entity.Country;
 import ru.lapinlisss.olympic_api.model.entity.Game;
 import ru.lapinlisss.olympic_api.model.entity.Result;
 import ru.lapinlisss.olympic_api.repository.AthleteRepository;
 import ru.lapinlisss.olympic_api.repository.CountryRepository;
+import ru.lapinlisss.olympic_api.repository.GameRepository;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -27,6 +30,7 @@ public class AthleteServiceImpl implements AthleteService {
 
     private final AthleteRepository athleteRepository;
     private final CountryRepository countryRepository;
+    private final GameRepository gameRepository;
 
     private final GameService gameService;
     private final ResultService resultService;
@@ -65,16 +69,47 @@ public class AthleteServiceImpl implements AthleteService {
     }
 
     @Override
-    public List<Athlete> getAthletesByGame(String type, int year, int page) {
+    public List<Athlete> getAthletesByGame(long id, int page) {
 
         List<Athlete> athletes = new ArrayList<>();
 
-        Game game = gameService.getGameByTypeAndYear(type, year);
+        Optional<Game> gameOptional = gameRepository.findById(id);
+
+        Game game = null;
+
+        if (gameOptional.isPresent()) {
+            game = gameOptional.get();
+        }
 
         Pageable pageable = PageRequest.of(page, 100);
 
         if (game != null) {
             Page<Result> results = resultService.getResultsByGame(game, pageable);
+            List<Athlete> athletesPrep = results.stream().map(Result::getAthlete)
+                    .collect(Collectors.toList());
+
+            athletes = new ArrayList<>(new LinkedHashSet<>(athletesPrep));
+        }
+
+        return athletes;
+    }
+
+    @Override
+    public List<Athlete> getAthletesByGame(long id) {
+
+        List<Athlete> athletes = new ArrayList<>();
+
+        Optional<Game> gameOptional = gameRepository.findById(id);
+
+        Game game = null;
+
+        if (gameOptional.isPresent()) {
+            game = gameOptional.get();
+        }
+
+        if (game != null) {
+            List<Result> results = game.getResults();
+
             List<Athlete> athletesPrep = results.stream().map(Result::getAthlete)
                     .collect(Collectors.toList());
 

@@ -70,12 +70,19 @@ public class AthleteController {
         return ResponseEntity.ok().body(athleteDtos);
     }
 
-    // get athletes by game
+    // get athletes by game id
     @Transactional
     @GetMapping("/game")
-    public ResponseEntity<List<AthleteDto>> getAthletesByGame(@RequestParam String type, @RequestParam int year, @RequestParam int page) {
-        log.info("Income request to get athletes by game type {} and year {}", type, year);
-        List<Athlete> athletes = athleteService.getAthletesByGame(type, year, page);
+    public ResponseEntity<List<AthleteDto>> getAthletesByGame(@RequestParam long id, @RequestParam int page) {
+        log.info("Income request to get athletes by game id {}", id);
+
+        List<Athlete> athletes;
+
+        if(page != -1) {
+            athletes = athleteService.getAthletesByGame(id, page);
+        } else {
+            athletes = athleteService.getAthletesByGame(id);
+        }
 
         List<AthleteDto> athleteDtos = athletes.stream()
                 .map(CustomMapper.INSTANCE::mapAthleteToAthleteDto)

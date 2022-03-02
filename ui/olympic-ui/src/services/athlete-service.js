@@ -18,8 +18,8 @@ class AthleteService {
         return ServiceUtil.call("get", null, `/athlete/country?counrty=${country}&page=${page}`)
     }
 
-    getAthletesByGame(type, year, page) {
-        return ServiceUtil.call("get", null, `/athlete/game?type=${type}&year=${year}&page=${page}`);
+    getAthletesByGame(id, page) {
+        return ServiceUtil.call("get", null, `/athlete/game?id=${id}&page=${page}`);
     }
 
     getAthletesByGameAndCountry(type, year, country) {
@@ -28,4 +28,4 @@ class AthleteService {
 
 }
 
-export default AthleteService;
+export default new AthleteService;
