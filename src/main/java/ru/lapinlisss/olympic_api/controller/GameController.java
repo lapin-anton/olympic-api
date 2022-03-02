@@ -12,8 +12,10 @@ import ru.lapinlisss.olympic_api.mapper.CustomMapper;
 import ru.lapinlisss.olympic_api.model.dto.GameDto;
 import ru.lapinlisss.olympic_api.model.entity.Game;
 import ru.lapinlisss.olympic_api.model.response.GameAthletesCount;
+import ru.lapinlisss.olympic_api.model.response.GameSportsCount;
 import ru.lapinlisss.olympic_api.repository.GameAthleteCountRepository;
 import ru.lapinlisss.olympic_api.repository.GameRepository;
+import ru.lapinlisss.olympic_api.repository.GameSportsCountRepository;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -30,6 +32,8 @@ public class GameController {
     private final GameRepository gameRepository;
 
     private final GameAthleteCountRepository gameAthleteCountRepository;
+
+    private final GameSportsCountRepository gameSportsCountRepository;
 
     // get all
     @Transactional
@@ -71,6 +75,18 @@ public class GameController {
                 gameAthleteCountRepository.findById(id);
 
         return ResponseEntity.ok().body(gameAthletesCountOptional.orElse(null));
+    }
+
+    // get sports count by game id
+    @Transactional
+    @GetMapping("/{id}/sports")
+    public ResponseEntity<GameSportsCount> getSportsCountByGameId(@PathVariable Long id) {
+        log.info("Income request to get athletes count by game id {}", id);
+
+        Optional<GameSportsCount> gameSportsCountOptional =
+                gameSportsCountRepository.findById(id);
+
+        return ResponseEntity.ok().body(gameSportsCountOptional.orElse(null));
     }
 
 }

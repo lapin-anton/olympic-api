@@ -20,6 +20,7 @@ class GamePage extends Component {
             game: null,
             rating: [],
             athleteCount: 0,
+            sportCount: 0,
             rowsPerPage: 5,
             page: 0
         }
@@ -44,6 +45,11 @@ class GamePage extends Component {
                 this.setState({athleteCount: response.data.athleteCount});
             })
             .catch(e => console.log(e));
+        GameService.getSportsCountByGameId(id)
+            .then(response => {
+                this.setState({sportCount: response.data.sportCount});
+            })
+            .catch(e => console.log(e));
     }
 
     handleChangePage = (event, newPage) => {
@@ -61,7 +67,7 @@ class GamePage extends Component {
 
     render() {
 
-        const {game, rating, athleteCount, rowsPerPage, page} = this.state;
+        const {game, rating, athleteCount, sportCount, rowsPerPage, page} = this.state;
 
         const {classes} = this.props;
 
@@ -71,21 +77,22 @@ class GamePage extends Component {
             <Container maxWidth="lg">
                 <h1 style={{"text-transform":"uppercase", "text-align":"center", "margin-top": "80px"}}>Game Info</h1>
                 <Grid container spacing={2}>
-                    <Grid item xs={4}>
-                        <div>
+                    <Grid item xs={6}>
+                        <div style={{"text-align":"center"}}>
                             <img
                                 src={game && game.thumbnailUrl}
                                 alt={game && game.city}
                             />
                         </div>
                     </Grid>
-                    <Grid item xs={8}>
+                    <Grid item xs={6}>
                             <TableContainer component={Paper}>
                                 <Table aria-label="simple table">
                                     <TableBody>
                                         <TableRow
                                             key={"city"}
                                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                            className={classes.oddRow}
                                         >
                                             <TableCell component="th" scope="row">City</TableCell>
                                             <TableCell align="center">{game && game.city}</TableCell>
@@ -93,6 +100,7 @@ class GamePage extends Component {
                                         <TableRow
                                             key={"year"}
                                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                            className={classes.evenRow}
                                         >
                                             <TableCell component="th" scope="row">Year</TableCell>
                                             <TableCell align="center">{game && game.year}</TableCell>
@@ -100,6 +108,7 @@ class GamePage extends Component {
                                         <TableRow
                                             key={"type"}
                                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                            className={classes.oddRow}
                                         >
                                             <TableCell component="th" scope="row">Season</TableCell>
                                             <TableCell align="center">{game && game.type}</TableCell>
@@ -107,6 +116,7 @@ class GamePage extends Component {
                                         <TableRow
                                             key={"type"}
                                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                            className={classes.evenRow}
                                         >
                                             <TableCell component="th" scope="row">Country's Teams</TableCell>
                                             <TableCell align="center">{rating && rating.length}</TableCell>
@@ -114,6 +124,7 @@ class GamePage extends Component {
                                         <TableRow
                                             key={"type"}
                                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                            className={classes.oddRow}
                                         >
                                             <TableCell component="th" scope="row">Athletes</TableCell>
                                             <TableCell align="center">{athleteCount}</TableCell>
@@ -121,9 +132,10 @@ class GamePage extends Component {
                                         <TableRow
                                             key={"type"}
                                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                            className={classes.evenRow}
                                         >
                                             <TableCell component="th" scope="row">Sports</TableCell>
-                                            <TableCell align="center">111</TableCell>
+                                            <TableCell align="center">{sportCount}</TableCell>
                                         </TableRow>
                                     </TableBody>
                                 </Table>
@@ -136,7 +148,7 @@ class GamePage extends Component {
                         <TableContainer component={Paper}>
                             <Table aria-label="simple table">
                                 <TableHead>
-                                    <TableRow>
+                                    <TableRow className={classes.headRow}>
                                         <TableCell align="center">Place</TableCell>
                                         <TableCell align="center">Country's Team</TableCell>
                                         <TableCell align="center">Gold</TableCell>

@@ -19,6 +19,9 @@ export const styles = {
         textTransform: "uppercase",
         textAlign: "center"
     },
+    headRow: {
+        backgroundColor: "#FFFFE0"
+    },
     goldColor: {
         backgroundColor: "#ffd700"
     },
@@ -30,6 +33,12 @@ export const styles = {
     },
     commonRowColor: {
         backgroundColor: "#fff"
+    },
+    oddRow: {
+        backgroundColor: "#FFE4E1",
+    },
+    evenRow: {
+        backgroundColor: "#FFDAB9"
     }
 }
 
