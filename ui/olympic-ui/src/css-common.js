@@ -18,6 +18,18 @@ export const styles = {
     pageHead: {
         textTransform: "uppercase",
         textAlign: "center"
+    },
+    goldColor: {
+        backgroundColor: "#ffd700"
+    },
+    silverColor: {
+        backgroundColor: "#c0c0c0"
+    },
+    bronzeColor: {
+        backgroundColor: "#cd7f32"
+    },
+    commonRowColor: {
+        backgroundColor: "#fff"
     }
 }
 

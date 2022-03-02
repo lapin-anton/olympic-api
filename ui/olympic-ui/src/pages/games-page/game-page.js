@@ -4,7 +4,7 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
-import {Container, Grid, Paper} from "@mui/material";
+import {Container, Grid, Paper, TableHead} from "@mui/material";
 import {withStyles} from '@mui/styles';
 import {styles} from "../../css-common";
 
@@ -47,7 +47,7 @@ class GamePage extends Component {
 
         const {game, rating, athleteCount} = this.state;
 
-        const {classes} = this.state;
+        const {classes} = this.props;
 
         return (
             <Container maxWidth="lg">
@@ -103,6 +103,50 @@ class GamePage extends Component {
                                     </TableBody>
                                 </Table>
                             </TableContainer>
+                    </Grid>
+                </Grid>
+                <Grid container spacing={1}>
+                    <Grid item xs={12}>
+                        <h2>Unofficial Team Medal Count</h2>
+                        <TableContainer component={Paper}>
+                            <Table aria-label="simple table">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Place</TableCell>
+                                        <TableCell>Country's Team</TableCell>
+                                        <TableCell>Gold</TableCell>
+                                        <TableCell>Silver</TableCell>
+                                        <TableCell>Bronze</TableCell>
+                                        <TableCell>Total</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {rating && rating.map((r, i) => {
+
+                                        let rowStyle = classes.commonRowColor;
+
+                                        if (i === 0) {
+                                            rowStyle = classes.goldColor;
+                                        }
+                                        if (i === 1) {
+                                            rowStyle = classes.silverColor;
+                                        }
+                                        if (i === 2) {
+                                            rowStyle = classes.bronzeColor;
+                                        }
+
+                                        return (<TableRow className={rowStyle}>
+                                            <TableCell>{i + 1}</TableCell>
+                                            <TableCell>{r.country}</TableCell>
+                                            <TableCell>{r.gold}</TableCell>
+                                            <TableCell>{r.silver}</TableCell>
+                                            <TableCell>{r.bronze}</TableCell>
+                                            <TableCell>{r.total}</TableCell>
+                                        </TableRow>);
+                                    })}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
                     </Grid>
                 </Grid>
             </Container>
