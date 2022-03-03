@@ -5,10 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import ru.lapinlisss.olympic_api.mapper.CustomMapper;
-import ru.lapinlisss.olympic_api.model.dto.ResultDto;
 import ru.lapinlisss.olympic_api.model.entity.Athlete;
 import ru.lapinlisss.olympic_api.model.entity.Country;
 import ru.lapinlisss.olympic_api.model.entity.Game;
@@ -143,6 +140,5 @@ public class AthleteServiceImpl implements AthleteService {
 
         return athletes;
     }
-
 
 }

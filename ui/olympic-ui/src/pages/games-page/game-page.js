@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 
 import TeamRatingTable from "../../components/team-rating-table/team-rating-table";
 import GameMainInfo from "../../components/game-main-info/game-main-info";
+import TopAthleteTable from "../../components/top-athletes-table/top-athletes-table";
 
 import {Container, Grid} from "@mui/material";
 import {withStyles} from '@mui/styles';
@@ -9,14 +10,15 @@ import {styles} from "../../css-common";
 
 import GameService from '../../services/game-service';
 import ResultsService from "../../services/results-service";
-
+import AthleteService from "../../services/athlete-service";
 
 class GamePage extends Component {
     constructor(props) {
         super(props);
         this.state = {
             game: null,
-            rating: [],
+            teamRating: [],
+            athleteRating: [],
             athleteCount: 0,
             sportCount: 0
         }
@@ -34,7 +36,7 @@ class GamePage extends Component {
             .catch(e => console.log(e))
         ResultsService.getCountryTeamRatingByGame(id)
             .then(response => {
-                this.setState({rating: response.data})})
+                this.setState({teamRating: response.data})})
             .catch(e => console.log(e));
         GameService.getAthletesCountByGameId(id)
             .then(response => {
@@ -46,11 +48,16 @@ class GamePage extends Component {
                 this.setState({sportCount: response.data.sportCount});
             })
             .catch(e => console.log(e));
+        AthleteService.getTop50AthletesByGame(id)
+            .then(response => {
+                this.setState({athleteRating: response.data})
+            })
+            .catch(e => console.log(e));
     }
 
     render() {
 
-        const {game, rating, athleteCount, sportCount} = this.state;
+        const {game, teamRating, athleteRating, athleteCount, sportCount} = this.state;
 
         return (
             <Container maxWidth="lg">
@@ -67,7 +74,7 @@ class GamePage extends Component {
                     <Grid item xs={6}>
                          <GameMainInfo
                              game={game}
-                             rating={rating}
+                             teamCount={teamRating && teamRating.length}
                              athleteCount={athleteCount}
                              sportCount={sportCount}
                          />
@@ -75,7 +82,12 @@ class GamePage extends Component {
                 </Grid>
                 <Grid container spacing={1}>
                     <Grid item xs={12}>
-                        <TeamRatingTable rating={rating} />
+                        <TeamRatingTable rating={teamRating} />
+                    </Grid>
+                </Grid>
+                <Grid container spacing={1}>
+                    <Grid item xs={12}>
+                        <TopAthleteTable rating={athleteRating}/>
                     </Grid>
                 </Grid>
             </Container>

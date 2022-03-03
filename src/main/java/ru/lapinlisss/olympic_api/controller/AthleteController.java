@@ -7,10 +7,19 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import ru.lapinlisss.olympic_api.mapper.CustomMapper;
 import ru.lapinlisss.olympic_api.model.dto.AthleteDto;
+import ru.lapinlisss.olympic_api.model.dto.ResultDto;
 import ru.lapinlisss.olympic_api.model.entity.Athlete;
+import ru.lapinlisss.olympic_api.model.response.AthletePerGame;
+import ru.lapinlisss.olympic_api.model.response.CountryTeamRatingItem;
+import ru.lapinlisss.olympic_api.repository.AthletePerGameRepository;
+import ru.lapinlisss.olympic_api.repository.AthleteRepository;
 import ru.lapinlisss.olympic_api.service.AthleteService;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -20,6 +29,8 @@ import java.util.stream.Collectors;
 public class AthleteController {
 
     private final AthleteService athleteService;
+
+    private final AthletePerGameRepository athletePerGameRepository;
 
     // get all
     @Transactional
@@ -90,6 +101,23 @@ public class AthleteController {
         return ResponseEntity.ok().body(athleteDtos);
     }
 
+    // get top 50 athletes by game id
+    @Transactional
+    @GetMapping("/game/{id}/top50")
+    public ResponseEntity<List<AthletePerGame>> getTop50AthletesByGame(@PathVariable long id) {
+        log.info("Income request to get top 50 athletes by game id {}", id);
+
+        List<AthletePerGame> athletes = athletePerGameRepository.findAllByGameId(id);
+
+        athletes.sort(Comparator.comparing(AthletePerGame::getGold)
+                .thenComparing(AthletePerGame::getSilver)
+                .thenComparing(AthletePerGame::getBronze));
+
+        Collections.reverse(athletes);
+
+        return ResponseEntity.ok().body(athletes.subList(0, 50));
+    }
+
     // get athletes by game and country
     @Transactional
     @GetMapping("/game/country")
@@ -102,7 +130,5 @@ public class AthleteController {
                 .collect(Collectors.toList());
         return ResponseEntity.ok().body(athleteDtos);
     }
-
-    // ...
 
 }

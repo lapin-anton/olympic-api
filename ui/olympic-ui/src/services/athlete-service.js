@@ -22,6 +22,10 @@ class AthleteService {
         return ServiceUtil.call("get", null, `/athlete/game?id=${id}&page=${page}`);
     }
 
+    getTop50AthletesByGame(id) {
+        return ServiceUtil.call("get", null, `/athlete/game/${id}/top50`);
+    }
+
     getAthletesByGameAndCountry(type, year, country) {
         return ServiceUtil.call("get", null, `/athlete/game/country?type=${type}&year=${year}&country=${country}`)
     }

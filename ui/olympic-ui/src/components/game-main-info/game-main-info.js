@@ -11,7 +11,7 @@ import TableContainer from "@mui/material/TableContainer";
 
 function GameMainInfo(props) {
 
-    const {classes, game, rating, athleteCount, sportCount} = props;
+    const {classes, game, teamCount, athleteCount, sportCount} = props;
 
     return (
         <TableContainer component={Paper}>
@@ -47,7 +47,7 @@ function GameMainInfo(props) {
                         className={classes.evenRow}
                     >
                         <TableCell component="th" scope="row">Country's Teams</TableCell>
-                        <TableCell align="center">{rating && rating.length}</TableCell>
+                        <TableCell align="center">{teamCount}</TableCell>
                     </TableRow>
                     <TableRow
                         key={"type"}
