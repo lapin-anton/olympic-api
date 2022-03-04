@@ -39,6 +39,10 @@ class TopAthleteTable extends Component {
         });
     };
 
+    onSelectAthlete = (id) => {
+        window.location.assign(`/Athlete/${id}`);
+    }
+
     render() {
 
         const {classes, rating} = this.props;
@@ -87,19 +91,23 @@ class TopAthleteTable extends Component {
                                     rowStyle = classes.bronzeColor;
                                 }
 
-                                return (<TableRow className={rowStyle}>
-                                    <TableCell align="center">{place}</TableCell>
-                                    <TableCell align="center">{r.name}</TableCell>
-                                    <TableCell align="center">{r.surname}</TableCell>
-                                    <TableCell align="center">{r.age}</TableCell>
-                                    <TableCell align="center">{r.country}</TableCell>
-                                    <TableCell align="center">{r.teamRank}</TableCell>
-                                    <TableCell align="center">{r.sport}</TableCell>
-                                    <TableCell align="center">{r.gold}</TableCell>
-                                    <TableCell align="center">{r.silver}</TableCell>
-                                    <TableCell align="center">{r.bronze}</TableCell>
-                                    <TableCell align="center">{r.total}</TableCell>
-                                </TableRow>)
+                                return (
+                                    <TableRow
+                                        className={rowStyle}
+                                        onClick={(e) => this.onSelectAthlete(r.id)}
+                                    >
+                                        <TableCell align="center">{place}</TableCell>
+                                        <TableCell align="center">{r.name}</TableCell>
+                                        <TableCell align="center">{r.surname}</TableCell>
+                                        <TableCell align="center">{r.age}</TableCell>
+                                        <TableCell align="center">{r.country}</TableCell>
+                                        <TableCell align="center">{r.teamRank}</TableCell>
+                                        <TableCell align="center">{r.sport}</TableCell>
+                                        <TableCell align="center">{r.gold}</TableCell>
+                                        <TableCell align="center">{r.silver}</TableCell>
+                                        <TableCell align="center">{r.bronze}</TableCell>
+                                        <TableCell align="center">{r.total}</TableCell>
+                                    </TableRow>)
                             })}
 
                             {emptyRows > 0 && (

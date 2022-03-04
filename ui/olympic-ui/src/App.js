@@ -6,14 +6,22 @@ import GameList from "./components/game-list/game-list";
 import SportList from "./components/sport-list/sport-list";
 
 import GamePage from './pages/games-page/game-page';
+import AthletePage from "./pages/athletes-page/athlete-page";
 
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import AppBar from "@mui/material/AppBar";
-import {Link, Route, Switch} from 'react-router-dom';
-import {Box} from "@mui/material";
+import {
+    Toolbar,
+    Typography,
+    AppBar,
+    Box
+} from "@mui/material";
+
+import {
+    Link,
+    Route,
+    Switch
+} from 'react-router-dom';
+
 import { withStyles } from '@mui/styles';
-
 import {styles} from "./css-common";
 
 function App(props) {
@@ -55,9 +63,9 @@ function App(props) {
                 <Route exact path="/" component={Home}/>
                 <Route exact path="/games" component={GameList}/>
                 <Route exact path="/sports" component={SportList}/>
-                {/*<Route exact path="/athletes" component={GameList}/>*/}
 
                 <Route exact path="/game/:id" component={GamePage}/>
+                <Route exact path="/athlete/:id" component={AthletePage}/>
             </Switch>
         </div>
     );
