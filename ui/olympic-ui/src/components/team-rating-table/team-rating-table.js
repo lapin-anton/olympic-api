@@ -48,8 +48,6 @@ class TeamRatingTable extends Component {
         const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rating.length) : 0;
 
         return (
-            <>
-                <h2 className={classes.listHead}>Unofficial Team Medal Count</h2>
                 <TableContainer component={Paper}>
                     <Table aria-label="simple table">
                         <TableHead>
@@ -122,7 +120,6 @@ class TeamRatingTable extends Component {
                         </TableFooter>
                     </Table>
                 </TableContainer>
-            </>
         );
     }
 

@@ -4,7 +4,13 @@ import TeamRatingTable from "../../components/team-rating-table/team-rating-tabl
 import GameMainInfo from "../../components/game-main-info/game-main-info";
 import TopAthleteTable from "../../components/top-athletes-table/top-athletes-table";
 
-import {Container, Grid} from "@mui/material";
+import {
+    Container,
+    Grid,
+    Accordion,
+    AccordionSummary,
+    AccordionDetails
+} from "@mui/material";
 import {withStyles} from '@mui/styles';
 import {styles} from "../../css-common";
 
@@ -59,10 +65,12 @@ class GamePage extends Component {
 
         const {game, teamRating, athleteRating, athleteCount, sportCount} = this.state;
 
+        const {classes} = this.props;
+
         return (
             <Container maxWidth="lg">
                 <h1 style={{"text-transform":"uppercase", "text-align":"center", "margin-top": "80px"}}>Game Info</h1>
-                <Grid container spacing={2}>
+                <Grid container spacing={2} style={{"margin-bottom":"10px"}}>
                     <Grid item xs={6}>
                         <div style={{"text-align":"center"}}>
                             <img
@@ -82,12 +90,22 @@ class GamePage extends Component {
                 </Grid>
                 <Grid container spacing={1}>
                     <Grid item xs={12}>
-                        <TeamRatingTable rating={teamRating} />
-                    </Grid>
-                </Grid>
-                <Grid container spacing={1}>
-                    <Grid item xs={12}>
-                        <TopAthleteTable rating={athleteRating}/>
+                        <Accordion>
+                            <AccordionSummary>
+                                <h2 className={classes.listHead}>Unofficial Team Medal Count</h2>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                <TeamRatingTable rating={teamRating} />
+                            </AccordionDetails>
+                        </Accordion>
+                        <Accordion>
+                            <AccordionSummary>
+                                <h2 className={classes.listHead}>Top 50 Athletes</h2>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                <TopAthleteTable rating={athleteRating}/>
+                            </AccordionDetails>
+                        </Accordion>
                     </Grid>
                 </Grid>
             </Container>

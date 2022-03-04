@@ -48,8 +48,6 @@ class TopAthleteTable extends Component {
         const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rating.length) : 0;
 
         return (
-            <>
-                <h2 className={classes.listHead}>Top 50 Athletes</h2>
                 <TableContainer component={Paper}>
                     <Table aria-label="simple table">
                         <TableHead>
@@ -132,7 +130,6 @@ class TopAthleteTable extends Component {
                         </TableFooter>
                     </Table>
                 </TableContainer>
-            </>
         );
     }
 
