@@ -39,6 +39,9 @@ export const styles = {
     },
     evenRow: {
         backgroundColor: "#FFDAB9"
+    },
+    athleteName: {
+        textTransform: "uppercase",
     }
 }
 

@@ -4,7 +4,7 @@ import {withStyles} from '@mui/styles';
 import {styles} from "../../css-common";
 
 import AthleteService from "../../services/athlete-service";
-import {Container, Grid} from "@mui/material";
+import {Container, Grid, Stack, Avatar, Typography} from "@mui/material";
 
 class AthletePage extends Component {
 
@@ -38,14 +38,18 @@ class AthletePage extends Component {
             <Container maxWidth="lg">
                 <h1 style={{"text-transform":"uppercase", "text-align":"center", "margin-top": "80px"}}>Athlete Info</h1>
                 <Grid container spacing={2} style={{"margin-bottom":"10px"}}>
-                    <Grid item xs={6}>
-                        <div style={{"text-align":"center"}}>
-
-                        </div>
+                    <Grid item xs={4} style={{"textAlign":"center"}}>
+                        <Stack direction="row" spacing={2}>
+                            <Avatar
+                                alt={data && data.surname}
+                                src=""
+                                sx={{ width: 256, height: 256 }}
+                                style={{"margin": "10px auto"}}
+                            />
+                        </Stack>
+                        <Typography className={classes.athleteName}>{data && data.name} {data && data.surname}</Typography>
                     </Grid>
-                    <Grid item xs={6}>
-                        <p>{data && data.name}</p>
-                        <p>{data && data.surname}</p>
+                    <Grid item xs={8}>
                         <p>{data && data.gender}</p>
                         <p>{data && data.country.name}</p>
                         <br/>
