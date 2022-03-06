@@ -5,6 +5,7 @@ import {styles} from "../../css-common";
 
 import AthleteService from "../../services/athlete-service";
 import {Container, Grid, Stack, Avatar, Typography} from "@mui/material";
+import AthleteMainInfo from "../../components/athlete-main-info/athlete-main-info";
 
 class AthletePage extends Component {
 
@@ -49,22 +50,11 @@ class AthletePage extends Component {
                         </Stack>
                         <Typography className={classes.athleteName}>{data && data.name} {data && data.surname}</Typography>
                     </Grid>
-                    <Grid item xs={8}>
-                        <p>{data && data.gender}</p>
-                        <p>{data && data.country.name}</p>
-                        <br/>
-                        {data && data.results.map(r => {
-                            return (
-                                <>
-                                    <p>Game: {r.game.city} {r.game.year} {r.game.type}</p>
-                                    <p>Age: {r.athleteAge}</p>
-                                    <p>Sport: {r.sport.name}</p>
-                                    <p>Result: gold {r.gold}, silver {r.silver}, bronze {r.bronze}</p>
-                                    <br/>
-                                </>
-                            )
-                        })}
-                    </Grid>
+                    { data &&
+                        <Grid item xs={8}>
+                            <AthleteMainInfo data={data} />
+                        </Grid>
+                    }
                 </Grid>
             </Container>
         );
