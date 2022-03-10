@@ -21,7 +21,7 @@ import TableContainer from "@mui/material/TableContainer";
 
 function AthleteMainInfo(props) {
 
-    const {data, classes} = props;
+    const {data, onSelectGame, classes} = props;
 
     return (
         <TableContainer component={Paper}>
@@ -59,6 +59,7 @@ function AthleteMainInfo(props) {
                                         src={r.game.thumbnailUrl}
                                         sx={{ width: 50, height: 50 }}
                                         style={{marginRight:'7px'}}
+                                        onClick={() => onSelectGame(r.game.id)}
                                     />
                                     <Typography>{r.game.city} {r.game.year} {r.game.type} / {r.sport.name} / Age: {r.athleteAge} /
                                         <Stack direction="row" spacing={1}>

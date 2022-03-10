@@ -29,6 +29,10 @@ class AthletePage extends Component {
             .catch(e => console.log(e));
     }
 
+    onSelectGame = (id) => {
+        window.location.assign(`/game/${id}`);
+    }
+
     render() {
 
         const {data} = this.state;
@@ -52,7 +56,10 @@ class AthletePage extends Component {
                     </Grid>
                     { data &&
                         <Grid item xs={8}>
-                            <AthleteMainInfo data={data} />
+                            <AthleteMainInfo
+                                data={data}
+                                onSelectGame={this.onSelectGame}
+                            />
                         </Grid>
                     }
                 </Grid>
