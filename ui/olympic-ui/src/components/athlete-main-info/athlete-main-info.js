@@ -5,7 +5,7 @@ import {styles} from "../../css-common";
 import {
     Accordion,
     AccordionDetails,
-    AccordionSummary,
+    AccordionSummary, Avatar,
     Chip, Divider,
     List,
     ListItem,
@@ -54,12 +54,19 @@ function AthleteMainInfo(props) {
                         {data && data.results.map(r => {
                             return(
                                 <ListItem divider>
-                                    <Typography>{r.game.city} {r.game.year} {r.game.type} / {r.sport.name} / Age: {r.athleteAge} / Results: </Typography>
-                                    <Stack direction="row" spacing={1}>
-                                        <Chip style={{"backgroundColor":"#ffd700"}} label={r.gold}/>
-                                        <Chip style={{"backgroundColor":"#c0c0c0"}} label={r.silver}/>
-                                        <Chip style={{"backgroundColor":"#cd7f32"}} label={r.bronze}/>
-                                    </Stack>
+                                    <Avatar
+                                        alt={r.game.city}
+                                        src={r.game.thumbnailUrl}
+                                        sx={{ width: 50, height: 50 }}
+                                        style={{marginRight:'7px'}}
+                                    />
+                                    <Typography>{r.game.city} {r.game.year} {r.game.type} / {r.sport.name} / Age: {r.athleteAge} /
+                                        <Stack direction="row" spacing={1}>
+                                            <Chip style={{"backgroundColor":"#ffd700"}} label={r.gold}/>
+                                            <Chip style={{"backgroundColor":"#c0c0c0"}} label={r.silver}/>
+                                            <Chip style={{"backgroundColor":"#cd7f32"}} label={r.bronze}/>
+                                        </Stack>
+                                    </Typography>
                                 </ListItem>
                             );
                         })}
