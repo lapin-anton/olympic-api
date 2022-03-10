@@ -4,7 +4,10 @@ import {withStyles} from '@mui/styles';
 import {styles} from "../../css-common";
 
 import AthleteService from "../../services/athlete-service";
-import {Container, Grid, Stack, Avatar, Typography} from "@mui/material";
+import {Container, Grid, Stack, Avatar, Typography, Badge} from "@mui/material";
+
+import UploadIcon from '@mui/icons-material/Upload';
+
 import AthleteMainInfo from "../../components/athlete-main-info/athlete-main-info";
 
 class AthletePage extends Component {
@@ -33,6 +36,10 @@ class AthletePage extends Component {
         window.location.assign(`/game/${id}`);
     }
 
+    uploadAthleteImageUrl = () => {
+        console.log('uploading image url int db');
+    }
+
     render() {
 
         const {data} = this.state;
@@ -45,14 +52,28 @@ class AthletePage extends Component {
                 <Grid container spacing={2} style={{"margin-bottom":"10px"}}>
                     <Grid item xs={4} style={{"textAlign":"center"}}>
                         <Stack direction="row" spacing={2}>
-                            <Avatar
-                                alt={data && data.surname}
-                                src=""
-                                sx={{ width: 256, height: 256 }}
-                                style={{"margin": "10px auto"}}
-                            />
+                            <Badge
+                                overlap="circular"
+                                anchorOrigin={{ vertical: 'bottom', horizontal: 'right'}}
+                                badgeContent={
+                                    <Avatar
+                                        src=""
+                                        sx={{ width: 35, height: 35 }}
+                                        style={{border:'2px solid', backgroundColor: '#990'}}
+                                        onClick={this.uploadAthleteImageUrl}
+                                    >
+                                        <UploadIcon />
+                                    </Avatar>
+                                }
+                            >
+                                <Avatar
+                                    alt={data && data.surname}
+                                    src=""
+                                    sx={{ width: 256, height: 256 }}
+                                    style={{"margin": "10px auto"}}
+                                />
+                            </Badge>
                         </Stack>
-                        <Typography className={classes.athleteName}>{data && data.name} {data && data.surname}</Typography>
                     </Grid>
                     { data &&
                         <Grid item xs={8}>

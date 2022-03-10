@@ -10,7 +10,7 @@ import {
     List,
     ListItem,
     Paper,
-    Stack,
+    Stack, TableHead,
     Typography
 } from "@mui/material";
 import Table from "@mui/material/Table";
@@ -26,9 +26,12 @@ function AthleteMainInfo(props) {
     return (
         <TableContainer component={Paper}>
             <Table aria-label="simple table">
+                <TableHead>
+                    <Typography className={classes.athleteName}>{data && data.name} {data && data.surname}</Typography>
+                </TableHead>
                 <TableBody>
                     <TableRow
-                        key={"city"}
+                        key={"gender"}
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         className={classes.oddRow}
                     >
@@ -36,7 +39,7 @@ function AthleteMainInfo(props) {
                         <TableCell align="center">{data && data.gender}</TableCell>
                     </TableRow>
                     <TableRow
-                        key={"year"}
+                        key={"country"}
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         className={classes.evenRow}
                     >
@@ -57,7 +60,7 @@ function AthleteMainInfo(props) {
                                     <Avatar
                                         alt={r.game.city}
                                         src={r.game.thumbnailUrl}
-                                        sx={{ width: 50, height: 50 }}
+                                        sx={{ width: 60, height: 60 }}
                                         style={{marginRight:'7px'}}
                                         onClick={() => onSelectGame(r.game.id)}
                                     />

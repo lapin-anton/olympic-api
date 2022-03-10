@@ -1,5 +1,3 @@
-import {blue, deepPurple, green, grey, red, yellow} from '@mui/material/colors';
-
 export const styles = {
     link: {
         textTransform: "unset",
@@ -42,6 +40,9 @@ export const styles = {
     },
     athleteName: {
         textTransform: "uppercase",
+        fontWeight: "900",
+        fontsize: "large",
+        padding: "5px"
     }
 }
 
