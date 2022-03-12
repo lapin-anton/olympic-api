@@ -19,4 +19,6 @@ public interface AthleteService {
     List<Athlete> getAthletesByGame(long id);
 
     List<Athlete> getAthletesByGameAndCountry(String type, int year, String country);
+
+    Athlete putImageUrlForAthlete(long id, String url);
 }

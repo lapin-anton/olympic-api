@@ -7,19 +7,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import ru.lapinlisss.olympic_api.mapper.CustomMapper;
 import ru.lapinlisss.olympic_api.model.dto.AthleteDto;
-import ru.lapinlisss.olympic_api.model.dto.ResultDto;
 import ru.lapinlisss.olympic_api.model.entity.Athlete;
 import ru.lapinlisss.olympic_api.model.response.AthletePerGame;
-import ru.lapinlisss.olympic_api.model.response.CountryTeamRatingItem;
 import ru.lapinlisss.olympic_api.repository.AthletePerGameRepository;
-import ru.lapinlisss.olympic_api.repository.AthleteRepository;
 import ru.lapinlisss.olympic_api.service.AthleteService;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -129,6 +124,15 @@ public class AthleteController {
                 .map(CustomMapper.INSTANCE::mapAthleteToAthleteDto)
                 .collect(Collectors.toList());
         return ResponseEntity.ok().body(athleteDtos);
+    }
+
+    // put athlete's image url
+    @Transactional
+    @PostMapping("/{id}/img")
+    public ResponseEntity<AthleteDto> putImageUrl(@PathVariable long id, @RequestParam String url) {
+        log.info("Income request to put athlete's image url {} for athlete with id {}", url, id);
+        return ResponseEntity.ok()
+                .body(CustomMapper.INSTANCE.mapAthleteToAthleteDto(athleteService.putImageUrlForAthlete(id, url)));
     }
 
 }

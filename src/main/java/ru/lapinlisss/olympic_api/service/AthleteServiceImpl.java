@@ -141,4 +141,16 @@ public class AthleteServiceImpl implements AthleteService {
         return athletes;
     }
 
+    @Override
+    public Athlete putImageUrlForAthlete(long id, String url) {
+
+        Athlete athlete = athleteRepository.getById(id);
+
+        if(athlete != null) {
+            athlete.setUrl(url);
+        }
+
+        return athleteRepository.saveAndFlush(athlete);
+    }
+
 }

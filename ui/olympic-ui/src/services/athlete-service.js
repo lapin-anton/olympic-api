@@ -30,6 +30,10 @@ class AthleteService {
         return ServiceUtil.call("get", null, `/athlete/game/country?type=${type}&year=${year}&country=${country}`)
     }
 
+    postImgUrl(id, url) {
+        return ServiceUtil.call("post", null, `/athlete/${id}/img?url=${url}`);
+    }
+
 }
 
 export default new AthleteService;
